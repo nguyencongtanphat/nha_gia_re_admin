@@ -4,22 +4,20 @@ import { UserOutlined } from "@ant-design/icons";
 
 import {
   Badge,
-  Drawer,
   Image,
-  List,
-  Typography,
   Avatar,
   Space,
   Divider
 } from "antd";
 import style from './Header.module.css';
 import Search from 'antd/es/input/Search';
+import logo from '../../../assets/Logo.png';
 
 function Header() {
   
   return (
     <div className={style.AppHeader}>
-      <div className={style.logo}>Student management</div>
+        <img src={logo} alt="" />
       <div className={style.searchContainer}>
         <Search
           placeholder="input search text"
@@ -35,10 +33,6 @@ function Header() {
         <Badge count={3} dot>
           <BellFilled
             style={{ fontSize: 24 }}
-            //   onClick={() => {
-            //     setNotificationsOpen(true);
-            //   }
-            // }
           />
         </Badge>
         <Divider type="vertical" style={{ width: 3, height: 30 }} />

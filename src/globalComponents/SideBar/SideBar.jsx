@@ -1,113 +1,67 @@
+import React, { useState } from 'react';
 import {
-    AppstoreOutlined,
-    ShopOutlined,
-    ShoppingCartOutlined,
-    UserOutlined,
-    CheckCircleOutlined,
-    BarChartOutlined,
-    GroupOutlined,
-    InsertRowLeftOutlined,
-    BookOutlined
-  } from "@ant-design/icons";
-  import { Menu } from "antd";
-  import { useEffect, useState } from "react";
-  import { useLocation, useNavigate } from "react-router-dom";
-  import style from "./SideBar.module.css";
-  
-  function SideMenu() {
-    const location = useLocation();
-    const [selectedKeys, setSelectedKeys] = useState("/");
-  
-    useEffect(() => {
-      const pathName = location.pathname;
-      setSelectedKeys(pathName);
-    }, [location.pathname]);
-  
-    const navigate = useNavigate();
-    return (
-      <div className={style.SideMenu}>
-        <Menu
-          className={style.SideMenuVertical}
-          mode="inline"
-          onClick={(item) => {
-            //item.key
-            navigate(item.key);
-          }}
-          selectedKeys={[selectedKeys]}
-          items={[
-            {
-              label: "Dashboard",
-              icon: <AppstoreOutlined />,
-              key: "/app",
-            },
-            {
-              label: "Students",
-              key: "students",
-              icon: <UserOutlined />,
-            },
-            {
-              label: "Teachers",
-              key: "teachers",
-              icon: <UserOutlined />,
-            },
-            {
-              label: "Classes-semesters",
-              key: "classes-semesters",
-              icon: <GroupOutlined />,
-            },
-            {
-              label: "Grades",
-              key: "grades",
-              icon: <InsertRowLeftOutlined />,
-            },
-            {
-              label: "Scores",
-              key: "scoregroup",
-              icon: <CheckCircleOutlined />,
-              children: [
-                {
-                  label: "Score Average",
-                  key: "scores",
-                },
-                {
-                  label: "Add Score",
-                  key: "add-score",
-                },
-              ],
-            },
-            {
-              label: "Report",
-              key: "report",
-              icon: <BarChartOutlined />,
-              children: [
-                {
-                  label: "Subject report",
-                  key: "subjectReport",
-                },
-                {
-                  label: "Semester Report",
-                  key: "semesterReport",
-                },
-              ],
-            },
-            {
-              label: "Rules",
-              key: "change-rules",
-              icon: <GroupOutlined />,
-            },
-            {
-              label: "Semester",
-              key: "semester",
-              icon: <GroupOutlined />,
-            },
-            {
-              label: "Subjects",
-              key: "subjects",
-              icon: <BookOutlined />,
-            },
-          ]}
-        ></Menu>
-      </div>
-    );
-  }
-  export default SideMenu;
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+} from '@ant-design/icons';
+import { Button, Menu } from 'antd';
+import style from "./SideBar.module.css";
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+const items = [
+  getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('Option 2', '2', <DesktopOutlined />),
+  getItem('Option 3', '3', <ContainerOutlined />),
+  getItem('Navigation One', 'sub1', <MailOutlined />, [
+    getItem('Option 5', '5'),
+    getItem('Option 6', '6'),
+    getItem('Option 7', '7'),
+    getItem('Option 8', '8'),
+  ]),
+  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+    getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  ]),
+];
+const SideBar = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+  return (
+    <div
+        className={style.SideMenu}
+    >
+      
+
+      <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+        theme="light"
+        inlineCollapsed={collapsed}
+        items={items}
+      />
+      <Button
+        type="primary"
+        onClick={toggleCollapsed}
+        className={style.ToggleButton}
+      >
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Button>
+    </div>
+  );
+};
+export default SideBar;
