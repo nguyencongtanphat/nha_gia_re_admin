@@ -25,11 +25,13 @@ const columns = [
   {
     title: "Gía",
     dataIndex: "price",
+    sorter: (a, b) => a.price - b.price,
     key: "price",
   },
   {
     title: "Diện tích",
     dataIndex: "area",
+    sorter: (a, b) => a.area - b.area,
     key: "area",
   },
   {
