@@ -2,14 +2,12 @@
 .SideMenuAndPageContent{
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
-    background-color: rgba(0, 0, 0, 0.05);
-    
+    align-items: flex-start;   
+    padding: 12px;
 }
 
 .PageContent{ 
     flex:2;
     height: 100%;
-    padding: 20px 50px;
-    /* padding-left: 12px; */
+   margin-left: 12px;
 }

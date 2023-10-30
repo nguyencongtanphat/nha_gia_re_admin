@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -7,7 +7,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PieChartOutlined,
+  FormOutlined
 } from '@ant-design/icons';
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Menu } from 'antd';
 import style from "./SideBar.module.css";
 function getItem(label, key, icon, children, type) {
@@ -21,14 +23,13 @@ function getItem(label, key, icon, children, type) {
 }
 const items = [
   getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('Bài đăng', 'post', <FormOutlined/>, [
+    getItem('DS Bài đăng chờ duyệt', 'pending_post'),
+    getItem('DS Bài đăng đã duyệt', 'approved_post'),
+  ]),
   getItem('Option 2', '2', <DesktopOutlined />),
   getItem('Option 3', '3', <ContainerOutlined />),
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
-  ]),
+  
   getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
     getItem('Option 9', '9'),
     getItem('Option 10', '10'),
@@ -37,6 +38,15 @@ const items = [
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  // const location = useLocation();
+  // const [selectedKeys, setSelectedKeys] = useState("/");
+
+  // useEffect(() => {
+  //   const pathName = location.pathname;
+  //   setSelectedKeys(pathName);
+  // }, [location.pathname]);
+
+  const navigate = useNavigate();
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
@@ -47,12 +57,17 @@ const SideBar = () => {
       
 
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+       
+        defaultOpenKeys={['post']}
         mode="inline"
         theme="light"
+        
         inlineCollapsed={collapsed}
         items={items}
+        onClick={(item) => {
+          //item.key
+          navigate(item.key);
+        }}
       />
       <Button
         type="primary"

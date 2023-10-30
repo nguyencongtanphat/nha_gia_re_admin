@@ -10,7 +10,6 @@ import {
   Divider
 } from "antd";
 import style from './Header.module.css';
-import Search from 'antd/es/input/Search';
 import logo from '../../../assets/Logo.png';
 
 function Header() {
@@ -18,17 +17,6 @@ function Header() {
   return (
     <div className={style.AppHeader}>
         <img src={logo} alt="" />
-      <div className={style.searchContainer}>
-        <Search
-          placeholder="input search text"
-          style={{
-            width: 500,
-          }}
-          onSearch={() => {}}
-          enterButton
-        />
-      </div>
-
       <Space>
         <Badge count={3} dot>
           <BellFilled

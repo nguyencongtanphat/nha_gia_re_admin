@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
-    "@ant-design/pro-layout": "^7.17.12",
     "antd": "^5.10.2",
     "axios": "^1.5.1",
     "localforage": "^1.10.0",
