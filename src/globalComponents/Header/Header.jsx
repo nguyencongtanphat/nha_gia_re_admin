@@ -1,6 +1,7 @@
 import React from 'react'
-import { BellFilled, MailOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { BellOutlined, MailOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
+import { Row, Col, Select, Button } from 'antd';
 
 import {
   Badge,
@@ -16,16 +17,16 @@ function Header() {
   
   return (
     <div className={style.AppHeader}>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" style={{height:"40px", paddingTop:"8px", paddingBottom:"8px", paddingLeft:"32px"}}/>
       <Space>
         <Badge count={3} dot>
-          <BellFilled
+          <BellOutlined
             style={{ fontSize: 24 }}
           />
         </Badge>
         <Divider type="vertical" style={{ width: 3, height: 30 }} />
-        <Avatar size={36} icon={<UserOutlined />} />
-         user name
+        <Avatar size={36} icon={<UserOutlined />} style={{backgroundColor:"#026D4D"}} />
+         <Row>Harry Nguyễn</Row>
         <CaretDownOutlined />
       </Space>
     </div>

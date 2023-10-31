@@ -10,7 +10,7 @@ const Root = ()=>{
             theme={{
             token: {
                 // Seed Token
-                colorPrimary: '#00b96b',
+                colorPrimary: '#026D4D',
                 borderRadius: 2,
                 // Alias Token
                 colorBgContainer: ' #FFFFFF',

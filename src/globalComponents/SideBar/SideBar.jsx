@@ -7,7 +7,11 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PieChartOutlined,
-  FormOutlined
+  FormOutlined,
+  UserOutlined,
+  WarningOutlined,
+  GiftOutlined,
+  ReadOutlined
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Menu } from 'antd';
@@ -22,19 +26,28 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('Dashboard', '1', <PieChartOutlined />),
   getItem('Bài đăng', 'post', <FormOutlined/>, [
     getItem('DS Bài đăng chờ duyệt', 'pending_post'),
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
   ]),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
+  getItem('Gói dịch vụ', '2', <GiftOutlined/>),
+  getItem('Mã giảm giá', '3', <ContainerOutlined />),
   
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  getItem('Tố cáo', 'sub2', <WarningOutlined />, [
+    getItem('DS Tố cáo chờ duyệt', '9'),
+    getItem('DS Tố cáo đã duyệt', '10'),
+    //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
+
+  getItem('Người dùng', 'sub3', <UserOutlined />, [
+    getItem('DS Người dùng', '11'),
+    getItem('DS ND chờ xác minh', '12'),
+    getItem('DS ND đã xác minh', '13'),
+    //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  ]),
+
+  getItem('Blog', '14', <ReadOutlined />),
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
