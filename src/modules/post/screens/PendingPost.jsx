@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table,  } from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Breadcrumb } from 'antd';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ const columns = [
     key: "description",
   },
   {
-    title: "Gía",
+    title: "Giá",
     dataIndex: "price",
     sorter: (a, b) => a.price - b.price,
     key: "price",
@@ -49,8 +49,8 @@ const columns = [
 const data1 = [
   {
     key: '1',
-    name: 'Nhà 1',
-    author: 'Người 1',
+    name: 'Nhà sổ hồng riêng 5x15 ngã 3 Lý Thường Kiệt, Thủ Đức',
+    author: 'Nguyễn Thành Trung',
     description: 'Mô tả 1',
     price: 1000000,
     area: 100,
@@ -323,17 +323,21 @@ function PendingPost(props) {
   return (
     <div>
       <Card>
-        <Row>
+      <Breadcrumb style={{marginBottom:"12px"}}>
+        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
+        <Breadcrumb.Item>DS Bài đăng chờ duyệt</Breadcrumb.Item>
+      </Breadcrumb>
+        <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
               DS Bài đăng chờ duyệt
             </Title>
           </Col>
         </Row>
-        <Row>
+        <Row style={{marginBottom:"12px"}}>
           <Col>
               <Search
-              placeholder="input search text"
+              placeholder="Nhập thông tin cần tìm..."
               style={{
                 width: 500,
               }}
