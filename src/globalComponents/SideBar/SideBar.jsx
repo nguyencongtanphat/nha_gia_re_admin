@@ -31,7 +31,7 @@ const items = [
     getItem('DS Bài đăng chờ duyệt', 'pending_post'),
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
   ]),
-  getItem('Gói dịch vụ', '2', <GiftOutlined/>),
+  getItem('Gói dịch vụ', 'package', <GiftOutlined/>),
   getItem('Mã giảm giá', '3', <ContainerOutlined />),
   
   getItem('Tố cáo', 'sub2', <WarningOutlined />, [

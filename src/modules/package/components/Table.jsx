@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography } from 'antd';
 
 import { useNavigate } from "react-router-dom";
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { CloseOutlined, CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import Column from "antd/es/table/Column";
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -50,13 +50,18 @@ function PostTable(props) {
     return (
       <div>
         <Flex gap="middle" justify="space-between" align="center">
-          <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
-          <Flex gap = "small">
-            <Button type="primary" size="middle" icon={<CheckOutlined/>} >
-              Duyệt
+        <Flex gap = "small">
+          <Title level={4}>DS Gói dịch vụ</Title>
+          <Button type="primary" size="middle" icon={<PlusOutlined/>} style={{backgroundColor:"#1890FF", marginLeft:"12px", marginTop:"16px"}}>
+              Thêm
             </Button>
-            <Button type="primary" size="middle" danger={true} icon={<CloseOutlined/>} onClick={showModal1}>
-              Từ chối
+          </Flex>
+          <Flex gap = "small">
+            <Button type="primary" size="middle" icon={<EditOutlined/>} >
+              Sửa
+            </Button>
+            <Button type="primary" size="middle" danger={true} icon={<DeleteOutlined/>} onClick={showModal1}>
+              Xóa
             </Button>
           </Flex>
         </Flex>

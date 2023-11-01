@@ -4,7 +4,7 @@ import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchingClasses from '../components/SearchingClass';
-import PostTable from '../components/TableOfClass';
+import PostTable from '../components/TableOfClassApproved';
 
 const columns = [
   {
@@ -325,12 +325,12 @@ function PendingPost(props) {
       <Card>
       <Breadcrumb style={{marginBottom:"12px"}}>
         <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-        <Breadcrumb.Item>DS Bài đăng chờ duyệt</Breadcrumb.Item>
+        <Breadcrumb.Item>DS Bài đăng đã duyệt</Breadcrumb.Item>
       </Breadcrumb>
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Bài đăng chờ duyệt
+              DS Bài đăng đã duyệt
             </Title>
           </Col>
         </Row>

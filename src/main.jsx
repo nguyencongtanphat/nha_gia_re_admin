@@ -5,7 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //main route here
 import DashBoard from "./modules/dashboard/dashboard";
 import PendingPost from "./modules/post/screens/PendingPost";
+import ApprovedPost from './modules/post/screens/ApprovedPost'
 import Root from "./Root";
+import Package from "./modules/package/screens/Package"
 const router = createBrowserRouter([
   {
     path:"/",
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
           {
             path: "pending_post",
             element: <PendingPost />,
+          },
+          {
+            path: "approved_post",
+            element: <ApprovedPost />,
+          },
+          {
+            path: "package",
+            element: <Package />,
           },
         ]
       }
