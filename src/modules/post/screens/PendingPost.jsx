@@ -11,13 +11,14 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 const columns = [
   {
     title: "Tên",
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "title",
+    key: "title",
   },
   {
     title: "Người đăng",
-    dataIndex: "author",
-    key: "author",
+    dataIndex: "user",
+    key: "user",
+    render: user => user.first_name + " "+ user.last_name,
   },
   {
     title: "Mô tả",
@@ -38,13 +39,13 @@ const columns = [
   },
   {
     title: "Ngày đăng",
-    dataIndex: "uploadDate",
-    key: "uploadDate",
+    dataIndex: "posted_date",
+    key: "posted_date",
   },
   {
     title: "Loại bất động sản",
-    dataIndex: "propertyType",
-    key: "propertyType",
+    dataIndex: "type_id",
+    key: "type_id",
   },
 ];
 
@@ -306,22 +307,12 @@ const data2 = [
   // Thêm các dòng dữ liệu khác tại đây (nếu cần)
 ];
 
-const tabs = [
-  {
-    key: '1',
-    label: 'Cho thuê',
-    children:<PostTable columns={columns} data={data1}/>,
-  },
-  {
-    key: '2',
-    label: 'Cần bán',
-    children: <PostTable columns={columns} data={data2}/>,
-  },
-];
+
 
 //function loader to call API
 export async function loader() {
   const posts = await ApiService.fetchData("posts");
+  
   if (!posts) {
     throw new Response("", {
       status: 404,
@@ -337,7 +328,20 @@ function PendingPost(props) {
   const { Title } = Typography;
   const {posts} = useLoaderData()
   console.log("data loader", posts)
+ // const [pendingPosts, setPendingPosts] = useState([])
 
+  const tabs = [
+    {
+      key: '1',
+      label: 'Cho thuê',
+      children:<PostTable columns={columns} data={posts}/>,
+    },
+    {
+      key: '2',
+      label: 'Cần bán',
+      children: <PostTable columns={columns} data={data2}/>,
+    },
+  ];
 
   return (
     <div>
