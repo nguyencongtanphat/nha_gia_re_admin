@@ -11,6 +11,10 @@ import Package from "./modules/package/screens/Package"
 import Voucher from "./modules/voucher/screens/Voucher"
 import PendingReporting from "./modules/reporting/screens/PendingReporting"
 import ApprovedReporting from "./modules/reporting/screens/ApprovedReporting"
+import User from "./modules/user/screens/User"
+import PendingUser from "./modules/user/screens/PendingUser"
+import VertificatedUser from "./modules/user/screens/VertificatedUser"
+import Blog from "./modules/blog/screens/Blog"
 
 const router = createBrowserRouter([
   {
@@ -47,6 +51,22 @@ const router = createBrowserRouter([
           {
             path: "approved_reporting",
             element: <ApprovedReporting/>,
+          },
+          {
+            path: "user",
+            element: <User/>,
+          },
+          {
+            path: "verificated_user",
+            element: <VertificatedUser/>,
+          },
+          {
+            path: "pending_user",
+            element: <PendingUser/>,
+          },
+          {
+            path: "blog",
+            element: <Blog/>,
           },
         ]
       }

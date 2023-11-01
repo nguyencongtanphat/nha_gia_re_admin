@@ -41,13 +41,13 @@ const items = [
   ]),
 
   getItem('Người dùng', 'sub3', <UserOutlined />, [
-    getItem('DS Người dùng', '11'),
-    getItem('DS ND chờ xác minh', '12'),
-    getItem('DS ND đã xác minh', '13'),
+    getItem('DS Người dùng', 'user'),
+    getItem('DS ND chờ xác minh', 'pending_user'),
+    getItem('DS ND đã xác minh', 'verificated_user'),
     //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
 
-  getItem('Blog', '14', <ReadOutlined />),
+  getItem('Blog', 'blog', <ReadOutlined />),
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
