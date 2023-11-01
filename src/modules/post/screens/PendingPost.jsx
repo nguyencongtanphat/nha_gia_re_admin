@@ -1,10 +1,11 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Breadcrumb } from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table} from 'antd';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate,  useLoaderData, useFetcher } from 'react-router-dom';
 import PostTable from '../components/TableOfClass';
 import ApiService from '../../../ApiService';
+import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 
 const columns = [
@@ -341,10 +342,7 @@ function PendingPost(props) {
   return (
     <div>
       <Card>
-      <Breadcrumb style={{marginBottom:"12px"}}>
-        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-        <Breadcrumb.Item>DS Bài đăng chờ duyệt</Breadcrumb.Item>
-      </Breadcrumb>
+      <Breadcrumbs></Breadcrumbs>
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
