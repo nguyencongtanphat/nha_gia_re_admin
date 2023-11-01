@@ -8,6 +8,10 @@ import PendingPost from "./modules/post/screens/PendingPost";
 import ApprovedPost from './modules/post/screens/ApprovedPost'
 import Root from "./Root";
 import Package from "./modules/package/screens/Package"
+import Voucher from "./modules/voucher/screens/Voucher"
+import PendingReporting from "./modules/reporting/screens/PendingReporting"
+import ApprovedReporting from "./modules/reporting/screens/ApprovedReporting"
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -31,6 +35,18 @@ const router = createBrowserRouter([
           {
             path: "package",
             element: <Package />,
+          },
+          {
+            path: "voucher",
+            element: <Voucher />,
+          },
+          {
+            path: "pending_reporting",
+            element: <PendingReporting/>,
+          },
+          {
+            path: "approved_reporting",
+            element: <ApprovedReporting/>,
           },
         ]
       }

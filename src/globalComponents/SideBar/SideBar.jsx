@@ -32,11 +32,11 @@ const items = [
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
   ]),
   getItem('Gói dịch vụ', 'package', <GiftOutlined/>),
-  getItem('Mã giảm giá', '3', <ContainerOutlined />),
+  getItem('Mã giảm giá', 'voucher', <ContainerOutlined />),
   
   getItem('Tố cáo', 'sub2', <WarningOutlined />, [
-    getItem('DS Tố cáo chờ duyệt', '9'),
-    getItem('DS Tố cáo đã duyệt', '10'),
+    getItem('DS Tố cáo chờ duyệt', 'pending_reporting'),
+    getItem('DS Tố cáo đã duyệt', 'approved_reporting'),
     //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
 

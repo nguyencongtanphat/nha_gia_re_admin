@@ -66,7 +66,7 @@ function PostTable(props) {
       <div>
         <Flex gap="middle" justify="space-between" align="center">
         <Flex gap = "small">
-          <Title level={4}>DS Gói dịch vụ</Title>
+          <Title level={4}>DS Mã giảm giá</Title>
           <Button type="primary" size="middle" icon={<PlusOutlined/>} style={{backgroundColor:"#1890FF", marginLeft:"12px", marginTop:"16px"}}
           onClick={showModal2}>
               Thêm
