@@ -2,9 +2,10 @@ import React from 'react';
 import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Breadcrumb } from 'antd';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import SearchingClasses from '../components/SearchingClass';
+import { useNavigate,  useLoaderData, useFetcher } from 'react-router-dom';
 import PostTable from '../components/TableOfClass';
+import ApiService from '../../../ApiService';
+
 
 const columns = [
   {
@@ -316,9 +317,26 @@ const tabs = [
     children: <PostTable columns={columns} data={data2}/>,
   },
 ];
+
+//function loader to call API
+export async function loader() {
+  const posts = await ApiService.fetchData("posts");
+  if (!posts) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return { posts };
+}
+
+
 function PendingPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
+  const {posts} = useLoaderData()
+  console.log("data loader", posts)
+
 
   return (
     <div>

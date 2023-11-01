@@ -16,7 +16,9 @@ const ApiService = {
   fetchData: async (url) => {
     try {
       const response = await api.get(`/${url}`);
-      return response.result;
+      const data = response.data.result;
+      console.log("data from API service helper:", data)
+      return data;
     } catch (error) {
       // Handle error
       console.error('Error while fetching data:', error);
