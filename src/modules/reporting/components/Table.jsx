@@ -50,7 +50,7 @@ function PostTable(props) {
     return (
       <div>
         <Flex gap="middle" justify="space-between" align="center">
-          <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
+          <Title level={4}>DS Tố cáo {props.abc} chờ duyệt</Title>
           <Flex gap = "small">
             <Button type="primary" size="middle" icon={<CheckOutlined/>} >
               Duyệt
