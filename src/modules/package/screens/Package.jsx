@@ -1,5 +1,6 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Breadcrumb } from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table } from 'antd';
+import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -335,10 +336,7 @@ function PendingPost(props) {
   return (
     <div>
       <Card>
-      <Breadcrumb style={{marginBottom:"12px"}}>
-        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-        <Breadcrumb.Item>Gói dịch vụ</Breadcrumb.Item>
-      </Breadcrumb>
+      <Breadcrumbs/>
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>

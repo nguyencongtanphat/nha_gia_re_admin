@@ -1,8 +1,9 @@
 import React from 'react'
 import { LikeOutlined, MessageOutlined, StarOutlined, PlusOutlined, EditOutlined, DeleteOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Avatar, List, Space } from 'antd';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Flex, Table, Breadcrumb, Modal, Form, Input} from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Flex, Table, Modal, Form, Input} from 'antd';
 import Search from 'antd/es/input/Search';
+import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchingClasses from '../../post/components/SearchingClass';
@@ -78,10 +79,7 @@ export default function Blog() {
   return (
     <div>
       <Card>
-      <Breadcrumb style={{marginBottom:"12px"}}>
-        <Breadcrumb.Item>Trang chủ</Breadcrumb.Item>
-        <Breadcrumb.Item>Blog</Breadcrumb.Item>
-      </Breadcrumb>
+        <Breadcrumbs/>
         <Row style={{marginBottom:"16px"}}>
           <Col>
           <Title level={3} style={{ margin: 0, padding: 0 }}>
