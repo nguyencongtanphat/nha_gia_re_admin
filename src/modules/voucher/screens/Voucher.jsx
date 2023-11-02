@@ -1,24 +1,23 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table} from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table } from 'antd';
 import Search from 'antd/es/input/Search';
-import { useState, useRef, useEffect } from 'react';
-import { useNavigate,  useLoaderData, useFetcher } from 'react-router-dom';
-import PostTable from '../components/TableOfClass';
-import ApiService from '../../../ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
-
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SearchingClasses from '../../post/components/SearchingClass';
+import PostTable from '../components/Table';
+import { Tag } from 'antd';
 
 const columns = [
   {
-    title: "Tên",
-    dataIndex: "title",
-    key: "title",
+    title: "Mã CODE",
+    dataIndex: "code",
+    key: "code",
   },
   {
-    title: "Người đăng",
-    dataIndex: "user",
-    key: "user",
-    render: user => user.first_name + " "+ user.last_name,
+    title: "Gói",
+    dataIndex: "package_name",
+    key: "package_name",
   },
   {
     title: "Mô tả",
@@ -26,49 +25,74 @@ const columns = [
     key: "description",
   },
   {
-    title: "Giá",
-    dataIndex: "price",
-    sorter: (a, b) => a.price - b.price,
-    key: "price",
+    title: "Giảm giá (%)",
+    dataIndex: "discount_percent",
+    sorter: (a, b) => a.discount_percent - b.discount_percent,
+    key: "discount_percent",
   },
   {
-    title: "Diện tích",
-    dataIndex: "area",
-    sorter: (a, b) => a.area - b.area,
-    key: "area",
+    title: "Số lượng sử dụng",
+    dataIndex: "limited_quantity",
+    sorter: (a, b) => a.limited_quantity - b.limited_quantity,
+    key: "limited_quantity",
   },
   {
-    title: "Ngày đăng",
-    dataIndex: "posted_date",
-    key: "posted_date",
+    title: "Ngày tạo",
+    dataIndex: "created_at",
+    key: "created_at",
   },
   {
-    title: "Loại bất động sản",
-    dataIndex: "type_id",
-    key: "type_id",
+    title: "Ngày bắt đầu",
+    dataIndex: "starting_date",
+    key: "starting_date",
   },
+  {
+    title: "Ngày hết hạn",
+    dataIndex: "expiration_date",
+    key: "expiration_date",
+  },
+  {
+    title: "Trạng thái",
+    dataIndex: "is_active",
+    key: "is_active",
+    render: (is_active) => (
+        <span>
+          {
+            
+              <Tag color={is_active ? "green" : "red"} key={is_active}>
+                {is_active ? "Đang kích hoạt" : "Vô hiệu"}
+              </Tag>
+            
+          }
+        </span>
+      ),
+    },
 ];
 
 const data1 = [
   {
     key: '1',
-    name: 'Nhà sổ hồng riêng 5x15 ngã 3 Lý Thường Kiệt, Thủ Đức',
-    author: 'Nguyễn Thành Trung',
-    description: 'Mô tả 1',
-    price: 1000000,
-    area: 100,
-    uploadDate: '01/01/2023',
-    propertyType: 'Loại 1',
+    code: 'XMAS2023',
+    description: 'Ưu đãi mùa noel 2023',
+    package_name: 'Cơ bản',
+    discount_percent: '20',
+    created_at: '01/01/2023',
+    starting_date: '01/12/2023',
+    expiration_date: '31/12/2023',
+    is_active: true,
+    limited_quantity: 1000
   },
   {
     key: '2',
-    name: 'Nhà 2',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
+    code: 'NEWY2023',
+    description: 'Ưu đãi mùa noel 2023',
+    package_name: 'Chuyên gia',
+    discount_percent: '20',
+    created_at: '01/01/2023',
+    starting_date: '01/12/2023',
+    expiration_date: '31/12/2023',
+    is_active: true,
+    limited_quantity: 1000
   },
   {
     key: '3',
@@ -307,50 +331,30 @@ const data2 = [
   // Thêm các dòng dữ liệu khác tại đây (nếu cần)
 ];
 
-
-
-//function loader to call API
-export async function loader() {
-  const posts = await ApiService.fetchData("posts");
-  
-  if (!posts) {
-    throw new Response("", {
-      status: 404,
-      statusText: "Not Found",
-    });
-  }
-  return { posts };
-}
-
-
+const tabs = [
+  {
+    key: '1',
+    label: 'Cho thuê',
+    children:<PostTable columns={columns} data={data1} abc='cho thuê'/>,
+  },
+  {
+    key: '2',
+    label: 'Cần bán',
+    children: <PostTable columns={columns} data={data2} abc='cần bán'/>,
+  },
+];
 function PendingPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
-  const {posts} = useLoaderData()
-  console.log("data loader", posts)
- // const [pendingPosts, setPendingPosts] = useState([])
-
-  const tabs = [
-    {
-      key: '1',
-      label: 'Cho thuê',
-      children:<PostTable columns={columns} data={posts}/>,
-    },
-    {
-      key: '2',
-      label: 'Cần bán',
-      children: <PostTable columns={columns} data={data2}/>,
-    },
-  ];
 
   return (
     <div>
       <Card>
-      <Breadcrumbs></Breadcrumbs>
+      <Breadcrumbs/>
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Bài đăng chờ duyệt
+             Mã giảm giá
             </Title>
           </Col>
         </Row>
@@ -367,7 +371,7 @@ function PendingPost(props) {
             </Col>
         </Row>
     
-        <Tabs defaultActiveKey="1" items={tabs}  />
+        <PostTable columns={columns} data={data1} />
       </Card>
       
     </div>

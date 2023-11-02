@@ -1,24 +1,22 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table} from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table } from 'antd';
 import Search from 'antd/es/input/Search';
-import { useState, useRef, useEffect } from 'react';
-import { useNavigate,  useLoaderData, useFetcher } from 'react-router-dom';
-import PostTable from '../components/TableOfClass';
-import ApiService from '../../../ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
-
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SearchingClasses from '../../post/components/SearchingClass';
+import PostTable from '../components/TableApproved';
 
 const columns = [
   {
     title: "Tên",
-    dataIndex: "title",
-    key: "title",
+    dataIndex: "name",
+    key: "name",
   },
   {
     title: "Người đăng",
-    dataIndex: "user",
-    key: "user",
-    render: user => user.first_name + " "+ user.last_name,
+    dataIndex: "author",
+    key: "author",
   },
   {
     title: "Mô tả",
@@ -39,13 +37,13 @@ const columns = [
   },
   {
     title: "Ngày đăng",
-    dataIndex: "posted_date",
-    key: "posted_date",
+    dataIndex: "uploadDate",
+    key: "uploadDate",
   },
   {
     title: "Loại bất động sản",
-    dataIndex: "type_id",
-    key: "type_id",
+    dataIndex: "propertyType",
+    key: "propertyType",
   },
 ];
 
@@ -307,50 +305,40 @@ const data2 = [
   // Thêm các dòng dữ liệu khác tại đây (nếu cần)
 ];
 
-
-
-//function loader to call API
-export async function loader() {
-  const posts = await ApiService.fetchData("posts");
-  
-  if (!posts) {
-    throw new Response("", {
-      status: 404,
-      statusText: "Not Found",
-    });
-  }
-  return { posts };
-}
-
-
+const tabs = [
+  {
+    key: '1',
+    label: 'Người dùng',
+    children:<PostTable columns={columns} data={data1} abc='người dùng'/>,
+  },
+  {
+    key: '2',
+    label: 'Bài đăng',
+    children: <PostTable columns={columns} data={data2} abc='bài đăng'/>,
+  },
+  {
+    key: '3',
+    label: 'Cuộc trò chuyện',
+    children: <PostTable columns={columns} data={data2} abc='cuộc trò chuyện'/>,
+  },
+  {
+    key: '4',
+    label: 'Bình luận',
+    children: <PostTable columns={columns} data={data2} abc='bình luận'/>,
+  },
+];
 function PendingPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
-  const {posts} = useLoaderData()
-  console.log("data loader", posts)
- // const [pendingPosts, setPendingPosts] = useState([])
-
-  const tabs = [
-    {
-      key: '1',
-      label: 'Cho thuê',
-      children:<PostTable columns={columns} data={posts}/>,
-    },
-    {
-      key: '2',
-      label: 'Cần bán',
-      children: <PostTable columns={columns} data={data2}/>,
-    },
-  ];
 
   return (
     <div>
       <Card>
-      <Breadcrumbs></Breadcrumbs>
+        <Breadcrumbs/>
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Bài đăng chờ duyệt
+              DS Tố cáo đã duyệt
             </Title>
           </Col>
         </Row>

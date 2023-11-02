@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography } from 'antd';
 
 import { useNavigate } from "react-router-dom";
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { CloseOutlined, CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import Column from "antd/es/table/Column";
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -19,12 +19,19 @@ function PostTable(props) {
 
     const [isModalOpen1, setIsModalOpen1] = useState(false);
 
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+
+
     const [item, setItem] = useState({});
 
     const showModal = (props) => {
       setIsModalOpen(true);
       setItem(props);
     };
+
+    const showModal2 = (props) => {
+        setIsModalOpen2(true);
+      };
 
     const showModal1 = (props) => {
       handleCancel();
@@ -46,17 +53,31 @@ function PostTable(props) {
     const handleCancel = () => {
       setIsModalOpen(false);
     };
+
+    const handleOk2 = () => {
+        setIsModalOpen2(false);
+      };
+  
+      const handleCancel2 = () => {
+        setIsModalOpen2(false);
+      };
     
     return (
       <div>
         <Flex gap="middle" justify="space-between" align="center">
-          <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
-          <Flex gap = "small">
-            <Button type="primary" size="middle" icon={<CheckOutlined/>} >
-              Duyệt
+        <Flex gap = "small">
+          <Title level={4}>DS Gói dịch vụ</Title>
+          <Button type="primary" size="middle" icon={<PlusOutlined/>} style={{backgroundColor:"#1890FF", marginLeft:"12px", marginTop:"16px"}}
+          onClick={showModal2}>
+              Thêm
             </Button>
-            <Button type="primary" size="middle" danger={true} icon={<CloseOutlined/>} onClick={showModal1}>
-              Từ chối
+          </Flex>
+          <Flex gap = "small">
+            <Button type="primary" size="middle" icon={<EditOutlined/>} >
+              Sửa
+            </Button>
+            <Button type="primary" size="middle" danger={true} icon={<DeleteOutlined/>} onClick={showModal1}>
+              Xóa
             </Button>
           </Flex>
         </Flex>
@@ -161,6 +182,44 @@ function PostTable(props) {
                 <Input placeholder="Nhập lý do từ chối..."/>
               </Form.Item>
         
+          </Form>
+            </Modal>
+
+            <Modal title="Thêm mới Gói dịch vụ" open={isModalOpen2} onOk={handleOk2} onCancel={handleCancel2}
+            footer={(_, { OkBtn2, CancelBtn2 }) => (
+              <>
+                <Button type="primary" icon={<PlusOutlined/>} 
+                style={{backgroundColor:"#1890FF"}}>Thêm</Button>
+              </>
+          )}>
+          <Form
+          style={{marginTop:"24px"}}
+          name="basic"
+          labelCol={{ span: 9 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          autoComplete="off"
+          >
+     
+              <Form.Item label="Tên">
+                <Input placeholder="Nhập tên..."/>
+              </Form.Item>
+
+              <Form.Item label="Mô tả">
+                <Input placeholder="Nhập mô tả..."/>
+              </Form.Item>
+
+              <Form.Item label="Giá/tháng">
+                <Input placeholder="Nhập giá/tháng"/>
+              </Form.Item>
+        
+              <Form.Item label="Số lượng bài đăng/tháng">
+                <Input placeholder="Nhập số lượng bài đăng/tháng"/>
+              </Form.Item>
+
+              <Form.Item label="Điểm ưu tiên">
+                <Input placeholder="Nhập điểm ưu tiên"/>
+              </Form.Item>
           </Form>
             </Modal>
         </Row>

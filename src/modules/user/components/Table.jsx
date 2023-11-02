@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography } from 'antd';
 
 import { useNavigate } from "react-router-dom";
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
 import Column from "antd/es/table/Column";
+
+const { confirm } = Modal;
 // rowSelection object indicates the need for row selection
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -17,26 +19,11 @@ function PostTable(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isModalOpen1, setIsModalOpen1] = useState(false);
-
     const [item, setItem] = useState({});
 
     const showModal = (props) => {
       setIsModalOpen(true);
       setItem(props);
-    };
-
-    const showModal1 = (props) => {
-      handleCancel();
-      setIsModalOpen1(true);
-    };
-
-    const handleOk1 = () => {
-      setIsModalOpen1(false);
-    };
-
-    const handleCancel1 = () => {
-      setIsModalOpen1(false);
     };
 
     const handleOk = () => {
@@ -46,17 +33,35 @@ function PostTable(props) {
     const handleCancel = () => {
       setIsModalOpen(false);
     };
+
+    const showDeleteConfirm = () => {
+      confirm({
+        title: 'Bạn thật sự muốn xóa bài đăng này?',
+        icon: <ExclamationCircleFilled />,
+        content: 'Bài đăng sẽ biến mất trên app của người dùng nếu bạn xoá nó.',
+        okText: 'Có',
+        okType: 'danger',
+        cancelText: 'Không',
+        onOk() {
+          console.log('OK');
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+    };
     
     return (
       <div>
         <Flex gap="middle" justify="space-between" align="center">
-          <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
+          <Title level={4}>{props.abc}</Title>
           <Flex gap = "small">
-            <Button type="primary" size="middle" icon={<CheckOutlined/>} >
-              Duyệt
+          <Button  style={{background:"#FFCD29"}} type='default' size="middle" icon={<LockOutlined/>} onClick={showDeleteConfirm} >
+              Khóa
             </Button>
-            <Button type="primary" size="middle" danger={true} icon={<CloseOutlined/>} onClick={showModal1}>
-              Từ chối
+
+            <Button type="primary" size="middle" danger={true} icon={<DeleteOutlined/>} onClick={showDeleteConfirm} >
+              Xóa
             </Button>
           </Flex>
         </Flex>
@@ -79,8 +84,7 @@ function PostTable(props) {
           <Modal title={item.name} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
             footer={(_, { OkBtn, CancelBtn }) => (
               <>
-                <Button icon={<CheckOutlined/>} type="primary">Duyệt</Button>
-                <Button type="primary" icon={<CloseOutlined/>} danger onClick={showModal1}>Từ chối</Button>
+                <Button type="primary" icon={<DeleteOutlined/>} danger onClick={showDeleteConfirm}>Xóa</Button>
               </>
           )}>
 
@@ -142,27 +146,6 @@ function PostTable(props) {
           </Form>
         </Modal>
 
-          <Modal title="Vui lòng nhập lý do từ chối bài đăng này" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1}
-            footer={(_, { OkBtn1, CancelBtn1 }) => (
-              <>
-                <Button type="primary" icon={<CloseOutlined/>} danger>Từ chối</Button>
-              </>
-          )}>
-          <Form
-          style={{marginTop:"24px"}}
-          name="basic"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
-          initialValues={{ remember: true }}
-          autoComplete="off"
-          >
-     
-              <Form.Item label="Lý do từ chối">
-                <Input placeholder="Nhập lý do từ chối..."/>
-              </Form.Item>
-        
-          </Form>
-            </Modal>
         </Row>
       </div>
       
