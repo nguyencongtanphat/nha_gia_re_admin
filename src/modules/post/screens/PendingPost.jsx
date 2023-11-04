@@ -4,7 +4,7 @@ import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate,  useLoaderData, useFetcher } from 'react-router-dom';
 import PostTable from '../components/TableOfClass';
-import ApiService from '../../../ApiService';
+import ApiService from '../../../service/ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 
@@ -311,7 +311,7 @@ const data2 = [
 
 //function loader to call API
 export async function loader() {
-  const posts = await ApiService.fetchData("posts");
+  const posts = await ApiService.fetchData("posts?post_status[eq]='pending'");
   
   if (!posts) {
     throw new Response("", {
