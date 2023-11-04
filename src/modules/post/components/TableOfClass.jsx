@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import Column from "antd/es/table/Column";
 // rowSelection object indicates the need for row selection
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  }
-};
+// const rowSelection = {
+//   onChange: (selectedRowKeys, selectedRows) => {
+//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+//   }
+// };
 
 function PostTable(props) {
     const { Title } = Typography;
@@ -67,16 +67,16 @@ function PostTable(props) {
           </Flex>
         </Flex>
         <Row style={{ display: "flex" }}>
-          <Table rowSelection
+          <Table 
             style={{ width: "100%" }}
             rowClassName="custom-row"
             dataSource={props.data}
             columns={props.columns}
-            onRow={(record) => ({
-              onClick: () => {
-                showModal(record)
-              },
-            })}
+            // onRow={(record) => ({
+            //   onClick: () => {
+            //     showModal(record)
+            //   },
+            // })}
           />
 
           {/* POP-UP */}
