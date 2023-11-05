@@ -39,17 +39,31 @@ const ApiService = {
       throw error;
     }
   },
-  updateDate: async (data) => {
+  post: async ({url, data}) => {
     try {
-      const response = await api.post('/data', data);
-      return response.data;
+      const response = await api.post(`/${url}`, data);
+      const result = response.data;
+      console.log("data from API service helper:", response)
+      return result;
     } catch (error) {
       // Handle error
       console.error('Error while sending data:', error);
       throw error;
     }
-  }
-  // Add more API service functions as needed
+  },
+  patch: async ({url, data}) => {
+    try {
+      const response = await api.patch(`/${url}`, data);
+      const result = response.data;
+      console.log("data from API service helper:", response)
+      return result;
+    } catch (error) {
+      // Handle error
+      console.error('Error while sending data:', error);
+      throw error;
+    }
+  },
+  
 };
 
 export default ApiService;

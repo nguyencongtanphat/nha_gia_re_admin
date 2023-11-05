@@ -42,7 +42,6 @@ function PostTable(props) {
 
     return (
       <div>
-        <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
         <Row style={{ display: "flex" }}>
           <Table
             style={{ width: "100%" }}

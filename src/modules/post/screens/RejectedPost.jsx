@@ -9,13 +9,13 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const posts = await ApiService.get("posts?post_status[eq]='approved'&post_is_active[eq]=true");
+  const posts = await ApiService.get("posts?post_status[eq]='rejected'&post_is_active[eq]=true");
   console.log("length",posts.length);
   if (!posts) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
-    });
+    });  
   }
   const postLease = posts.filter(post => post.is_lease === true);
   const postNoLease = posts.filter(post => post.is_lease === false);
@@ -24,48 +24,7 @@ export async function loader() {
   return { postLease, postNoLease};
 }
 
-export async function action({ request, params }){
-  const data = await request.formData()
-  const id = data.get("id")
-  console.log("id", id)
-  const type = data.get("type")
-  if(type === "approve"){
-    try{
-      console.log("approve request")
-      const result =  await ApiService.post({url:`posts/approve?id=${id}`, data:{}});
-      if(result.status == "success"){
-        alert("approve success")
-      }else{
-        alert("error")
-      }
-      return null;
-    }catch(e){
-      console.log(e)
-      alert(e)
-      return null;
-    }
-  }
-  if (type === "reject"){
-    try{
-      console.log("reject request")
-      const result =  await ApiService.post({url:`posts/reject?id=${id}`, data:{}});
-      console.log("rejected results", result)
-      if(result.status == "success"){
-        alert("reject success")
-      }else{
-        alert("error")
-      }
-      return null;
-    }catch(e){
-      console.log(e)
-      alert(e)
-      return null;
-    }
-  }
-}
-
 function RejectedPost(props) {
-  const navigate = useNavigate()
   const { Title } = Typography;
   const { postLease, postNoLease} = useLoaderData()
   const fetcher = useFetcher();
@@ -114,20 +73,7 @@ function RejectedPost(props) {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <fetcher.Form method="post">
-            <Button 
-              onClick={(e)=>{
-                e.stopPropagation()
-              }}
-              type="primary"
-              htmlType="submit"  
-              name="id"
-              value={record.id}>
-                Duyệt
-            </Button>
-            <input type="hidden" name="type" value ="approve" />
-          </fetcher.Form>
-          <fetcher.Form method="post">
+          <fetcher.Form method="patch">
             <Button 
               onClick={(e)=>{
                 e.stopPropagation()
@@ -136,9 +82,9 @@ function RejectedPost(props) {
               htmlType="submit"  
               name="id"
               value={record.id}>
-                Từ chối
+                Xóa
             </Button>
-            <input type="hidden" name="type" value ="reject" />
+            <input type="hidden" name="type" value ="delete" />
           </fetcher.Form>
         </Space>
       ),
@@ -166,7 +112,7 @@ function RejectedPost(props) {
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Bài đăng chờ duyệt
+              DS Bài đăng đã từ chối duyệt
             </Title>
           </Col>
         </Row>

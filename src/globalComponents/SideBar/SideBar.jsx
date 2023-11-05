@@ -30,6 +30,7 @@ const items = [
   getItem('Bài đăng', 'post', <FormOutlined/>, [
     getItem('DS Bài đăng chờ duyệt', 'pending_post'),
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
+    getItem('DS Bài đăng đã từ chối', 'rejected_post'),
   ]),
   getItem('Gói dịch vụ', 'package', <GiftOutlined/>),
   getItem('Mã giảm giá', 'voucher', <ContainerOutlined />),
