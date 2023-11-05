@@ -9,13 +9,13 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const posts = await ApiService.get("posts?post_status[eq]='pending'&post_is_active[eq]=true");
+  const posts = await ApiService.get("posts?post_status[eq]='rejected'&post_is_active[eq]=true");
   console.log("length",posts.length);
   if (!posts) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
-    });
+    });  
   }
   const postLease = posts.filter(post => post.is_lease === true);
   const postNoLease = posts.filter(post => post.is_lease === false);
@@ -24,8 +24,7 @@ export async function loader() {
   return { postLease, postNoLease};
 }
 
-function PendingPost(props) {
-  const navigate = useNavigate()
+function RejectedPost(props) {
   const { Title } = Typography;
   const { postLease, postNoLease} = useLoaderData()
   const fetcher = useFetcher();
@@ -74,20 +73,7 @@ function PendingPost(props) {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <fetcher.Form method="post">
-            <Button 
-              onClick={(e)=>{
-                e.stopPropagation()
-              }}
-              type="primary"
-              htmlType="submit"  
-              name="id"
-              value={record.id}>
-                Duyệt
-            </Button>
-            <input type="hidden" name="type" value ="approve" />
-          </fetcher.Form>
-          <fetcher.Form method="post">
+          <fetcher.Form method="patch">
             <Button 
               onClick={(e)=>{
                 e.stopPropagation()
@@ -96,9 +82,9 @@ function PendingPost(props) {
               htmlType="submit"  
               name="id"
               value={record.id}>
-                Từ chối
+                Xóa
             </Button>
-            <input type="hidden" name="type" value ="reject" />
+            <input type="hidden" name="type" value ="delete" />
           </fetcher.Form>
         </Space>
       ),
@@ -126,7 +112,7 @@ function PendingPost(props) {
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Bài đăng chờ duyệt
+              DS Bài đăng đã từ chối duyệt
             </Title>
           </Col>
         </Row>
@@ -150,4 +136,4 @@ function PendingPost(props) {
   );
 }
 
-export default PendingPost;
+export default RejectedPost;

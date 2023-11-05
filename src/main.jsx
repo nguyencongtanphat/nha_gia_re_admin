@@ -4,11 +4,10 @@ import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //main route here
 import DashBoard from "./modules/dashboard/dashboard";
-import PendingPost from "./modules/post/screens/PendingPost";
-import ApprovedPost from './modules/post/screens/ApprovedPost'
-import { 
-  loader as postLoader,
-} from "./modules/post/screens/PendingPost";
+import PendingPost, { loader as pendingPostLoader} from "./modules/post/screens/PendingPost";
+import ApprovedPost, {loader as approvedPostLoader} from "./modules/post/screens/ApprovedPost";
+import RejectedPost, {loader as rejectedPostLoader} from "./modules/post/screens/RejectedPost";
+import {action as postAction} from "./modules/post/action"
 import Root from "./Root";
 import Package from "./modules/package/screens/Package"
 import Voucher from "./modules/voucher/screens/Voucher"
@@ -34,11 +33,20 @@ const router = createBrowserRouter([
           {
             path: "pending_post",
             element: <PendingPost />,
-            loader: postLoader,
+            loader: pendingPostLoader,
+            action: postAction,
           },
           {
-            path: "approved_post",
+            path:"approved_post",
             element: <ApprovedPost />,
+            loader: approvedPostLoader,
+            action: postAction,
+          },
+          {
+            path:"rejected_post",
+            element: <RejectedPost />,
+            loader: rejectedPostLoader,
+            action: postAction,
           },
           {
             path: "package",
@@ -72,10 +80,10 @@ const router = createBrowserRouter([
             path: "blog",
             element: <Blog/>,
           },
-          {
-            path: "approved_post",
-            element: <ApprovedPost />,
-          },
+          // {
+          //   path: "approved_post",
+          //   element: <ApprovedPost />,
+          // },
           {
             path: "package",
             element: <Package />,

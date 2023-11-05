@@ -3,7 +3,6 @@ import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Breadcrumb } fr
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchingClasses from '../../post/components/SearchingClass';
 import PostTable from '../components/Table';
 
 const columns = [

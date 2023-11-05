@@ -13,7 +13,7 @@ const api = axios.create({
 // Define your API service functions
 const ApiService = {
   // Example function to fetch data from the API
-  fetchData: async (url) => {
+  get: async (url) => {
     try {
       const response = await api.get(`/${url}`);
       const data = response.data.result;
@@ -27,18 +27,43 @@ const ApiService = {
   },
 
   // Example function to send data to the API
-  sendData: async (data) => {
+  post: async ({url, data}) => {
     try {
-      const response = await api.post('/data', data);
-      return response.data;
+      const response = await api.post(`/${url}`, data);
+      const result = response.data;
+      console.log("data from API service helper:", response)
+      return result;
     } catch (error) {
       // Handle error
       console.error('Error while sending data:', error);
       throw error;
     }
   },
-
-  // Add more API service functions as needed
+  post: async ({url, data}) => {
+    try {
+      const response = await api.post(`/${url}`, data);
+      const result = response.data;
+      console.log("data from API service helper:", response)
+      return result;
+    } catch (error) {
+      // Handle error
+      console.error('Error while sending data:', error);
+      throw error;
+    }
+  },
+  patch: async ({url, data}) => {
+    try {
+      const response = await api.patch(`/${url}`, data);
+      const result = response.data;
+      console.log("data from API service helper:", response)
+      return result;
+    } catch (error) {
+      // Handle error
+      console.error('Error while sending data:', error);
+      throw error;
+    }
+  },
+  
 };
 
 export default ApiService;
