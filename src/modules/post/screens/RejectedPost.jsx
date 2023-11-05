@@ -9,7 +9,7 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const posts = await ApiService.get("posts?post_status[eq]='pending'&post_is_active[eq]=true");
+  const posts = await ApiService.get("posts?post_status[eq]='approved'&post_is_active[eq]=true");
   console.log("length",posts.length);
   if (!posts) {
     throw new Response("", {
@@ -64,7 +64,7 @@ export async function action({ request, params }){
   }
 }
 
-function PendingPost(props) {
+function RejectedPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
   const { postLease, postNoLease} = useLoaderData()
@@ -190,4 +190,4 @@ function PendingPost(props) {
   );
 }
 
-export default PendingPost;
+export default RejectedPost;

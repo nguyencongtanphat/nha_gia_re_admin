@@ -37,15 +37,7 @@ const router = createBrowserRouter([
             loader: postLoader,
             action: action,
           },
-          // {
-          //   path: "pending_post/approve",
-          //   action: approveAction,
-          //   errorElement: <div>Oops! There was an error.</div>,
-          // },
-          // {
-          //   path: "approved_post",
-          //   element: <ApprovedPost />,
-          // },
+        
           {
             path: "package",
             element: <Package />,

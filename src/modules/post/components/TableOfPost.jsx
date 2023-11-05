@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Image } from 'antd';
 const { TextArea } = Input;
 import { useNavigate } from "react-router-dom";
-import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import Column from "antd/es/table/Column";
-// rowSelection object indicates the need for row selection
-// const rowSelection = {
-//   onChange: (selectedRowKeys, selectedRows) => {
-//     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-//   }
-// };
+import { CloseOutlined} from '@ant-design/icons';
 
 function PostTable(props) {
     const { Title } = Typography;
@@ -21,17 +14,11 @@ function PostTable(props) {
 
     const [item, setItem] = useState({});
 
-    const showModal = (props) => {
-      //pre-process 
-      
-      console.log("model data here address popup",  props.address)
-      // const address = props.address.detail;
-      // props.address = address
-      setIsModalOpen(true);
-     
-      setItem(props);
-    };
-
+    const onRowHandler = (record) =>{
+        setIsModalOpen(true);
+        setItem(record);
+    }
+   
     const showModal1 = (props) => {
       handleCancel();
       setIsModalOpen1(true);
@@ -52,33 +39,33 @@ function PostTable(props) {
     const handleCancel = () => {
       setIsModalOpen(false);
     };
-    
+
     return (
       <div>
         <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
         <Row style={{ display: "flex" }}>
-          <Table 
+          <Table
             style={{ width: "100%" }}
             rowClassName="custom-row"
             dataSource={props.data}
             columns={props.columns}
-            // onRow={(record) => ({
-            //   onClick: () => {
-            //     showModal(record)
-            //   },
-            // })}
+           
+            onRow={(record) => ({
+              onClick: () => {
+                onRowHandler(record)
+              },
+            })}
           />
 
-          {/* POP-UP */}
-          {/* <Modal title={item.name} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}> */}
           {
             Object.keys(item).length !== 0 && <Modal title={item.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
-            footer={(_, { OkBtn, CancelBtn }) => (
-              <>
-                <Button icon={<CheckOutlined/>} type="primary">Duyệt</Button>
-                <Button type="primary" icon={<CloseOutlined/>} danger onClick={showModal1}>Từ chối</Button>
-              </>
-          )}>
+            // footer={(_, { OkBtn, CancelBtn }) => (
+            //   <>
+            //     <Button icon={<CheckOutlined/>} type="primary">Duyệt</Button>
+            //     <Button type="primary" icon={<CloseOutlined/>} danger onClick={showModal1}>Từ chối</Button>
+            //   </>
+            // )}
+          >
 
             {/* Form */}
             <Form
@@ -96,11 +83,11 @@ function PostTable(props) {
               <Form.Item label="Ngày đăng">
                 <Input value={item.posted_date}/>
               </Form.Item>
-                
+
               <Form.Item label="Địa chỉ">
                 <TextArea rows={2} value={item.address_detail}/>
               </Form.Item>
-              
+
               <Form.Item label="Giá">
                 <Input value={item.price}/>
               </Form.Item>
@@ -148,7 +135,7 @@ function PostTable(props) {
             </Form>
           </Modal>
           }
-          
+
 
           <Modal title="Vui lòng nhập lý do từ chối bài đăng này" open={isModalOpen1} onOk={handleOk1} onCancel={handleCancel1}
             footer={(_, { OkBtn1, CancelBtn1 }) => (
@@ -164,16 +151,16 @@ function PostTable(props) {
           initialValues={{ remember: true }}
           autoComplete="off"
           >
-     
+
               <Form.Item label="Lý do từ chối">
                 <Input placeholder="Nhập lý do từ chối..."/>
               </Form.Item>
-        
+
           </Form>
             </Modal>
         </Row>
       </div>
-      
+
     );
 }
 
