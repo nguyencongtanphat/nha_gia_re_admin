@@ -4,8 +4,8 @@ import ErrorPage from "./error-page";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //main route here
 import DashBoard from "./modules/dashboard/dashboard";
-import PendingPost, {approveAction} from "./modules/post/screens/PendingPost";
-import ApprovedPost from './modules/post/screens/ApprovedPost'
+import PendingPost, { action} from "./modules/post/screens/PendingPost";
+
 import { 
   loader as postLoader,
 } from "./modules/post/screens/PendingPost";
@@ -35,16 +35,17 @@ const router = createBrowserRouter([
             path: "pending_post",
             element: <PendingPost />,
             loader: postLoader,
+            action: action,
           },
-          {
-            path: "pending_post/approve",
-            action: approveAction,
-            errorElement: <div>Oops! There was an error.</div>,
-          },
-          {
-            path: "approved_post",
-            element: <ApprovedPost />,
-          },
+          // {
+          //   path: "pending_post/approve",
+          //   action: approveAction,
+          //   errorElement: <div>Oops! There was an error.</div>,
+          // },
+          // {
+          //   path: "approved_post",
+          //   element: <ApprovedPost />,
+          // },
           {
             path: "package",
             element: <Package />,
@@ -77,10 +78,10 @@ const router = createBrowserRouter([
             path: "blog",
             element: <Blog/>,
           },
-          {
-            path: "approved_post",
-            element: <ApprovedPost />,
-          },
+          // {
+          //   path: "approved_post",
+          //   element: <ApprovedPost />,
+          // },
           {
             path: "package",
             element: <Package />,

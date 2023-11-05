@@ -1,184 +1,81 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Space} from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Space, Input} from 'antd';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate,  useLoaderData, useFetcher, Form, redirect } from 'react-router-dom';
-import PostTable from '../components/TableOfClass';
+import PostTable from '../components/TableOfPost';
 import ApiService from '../../../service/ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 
 
-const data2 = [
-  {
-    key: '1',
-    name: 'Nhà xr',
-    author: 'Người 1',
-    description: 'Mô tả 1',
-    price: 2000000,
-    area: 100,
-    uploadDate: '01/01/2023',
-    propertyType: 'Loại 1',
-  },
-  {
-    key: '2',
-    name: 'Nhà bahb',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà nfasjn',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà amkdkfma',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà njandjnf',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '1',
-    name: 'Nhà xr',
-    author: 'Người 1',
-    description: 'Mô tả 1',
-    price: 2000000,
-    area: 100,
-    uploadDate: '01/01/2023',
-    propertyType: 'Loại 1',
-  },
-  {
-    key: '2',
-    name: 'Nhà bahb',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà nfasjn',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà amkdkfma',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà njandjnf',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà nfasjn',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà amkdkfma',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  {
-    key: '2',
-    name: 'Nhà njandjnf',
-    author: 'Người 2',
-    description: 'Mô tả 2',
-    price: 2000000,
-    area: 200,
-    uploadDate: '02/01/2023',
-    propertyType: 'Loại 2',
-  },
-  // Thêm các dòng dữ liệu khác tại đây (nếu cần)
-];
 
 //function loader to call API
 export async function loader() {
   const posts = await ApiService.get("posts?post_status[eq]='pending'");
+  console.log("length",posts.length);
   if (!posts) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
     });
   }
-  return { posts };
+  const postLease = posts.filter(post => post.is_lease === true);
+  const postNoLease = posts.filter(post => post.is_lease === false);
+  console.log("lease", postLease)
+  console.log("no lease", postNoLease)
+  return { postLease, postNoLease};
 }
 
-export async function approveAction({ request, params }) {
-  try{
-    const data = await request.formData()
-    const id = data.get("id")
-    const result =  await ApiService.post({url:`posts/approve?id=${id}`, data:{}});
-    if(result.status == "success"){
-      alert("approve success")
-    }else{
-      alert("error")
+export async function action({ request, params }){
+  const data = await request.formData()
+  const id = data.get("id")
+  console.log("id", id)
+  const type = data.get("type")
+  if(type === "approve"){
+    try{
+      console.log("approve request")
+      const result =  await ApiService.post({url:`posts/approve?id=${id}`, data:{}});
+      if(result.status == "success"){
+        alert("approve success")
+      }else{
+        alert("error")
+      }
+      return null;
+    }catch(e){
+      console.log(e)
+      alert(e)
+      return null;
     }
-    return redirect("/pending_post");
-  }catch(e){
-    console.log(e)
+  }
+  if (type === "reject"){
+    try{
+      console.log("reject request")
+      const result =  await ApiService.post({url:`posts/reject?id=${id}`, data:{}});
+      console.log("rejected results", result)
+      if(result.status == "success"){
+        alert("reject success")
+      }else{
+        alert("error")
+      }
+      return null;
+    }catch(e){
+      console.log(e)
+      alert(e)
+      return null;
+    }
   }
 }
+
+
+
 
 function PendingPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
-  const {posts} = useLoaderData()
-  console.log("data loader", posts)
- // const [pendingPosts, setPendingPosts] = useState([])
+  const { postLease, postNoLease} = useLoaderData()
+  const fetcher = useFetcher();
 
-  
   const columns = [
     {
       title: "Tên",
@@ -219,11 +116,11 @@ function PendingPost(props) {
       key: "type_id",
     },
     {
-      title: 'Action',
+      title: 'Hành động',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-           <Form
+           {/* <Form
             method="post"
             action="approve"
             onSubmit={(event) => {
@@ -236,15 +133,35 @@ function PendingPost(props) {
               }
             }}
           >
-            <button 
-              onClick={()=>{console.log("click")}} 
-              type="submit"
+            <Button 
+              type="primary" 
+              htmlType="submit"  
               name="id"
               value={record.id}>
-                Approve
-            </button>
-          </Form>
-          {/* <a>Delete</a> */}
+                Duyệt
+            </Button>
+            <input type="hidden" name="type" value ="approve" />
+          </Form> */}
+          <fetcher.Form method="post">
+            <Button 
+              type="primary"
+              htmlType="submit"  
+              name="id"
+              value={record.id}>
+                Duyệt
+            </Button>
+            <input type="hidden" name="type" value ="approve" />
+          </fetcher.Form>
+          <fetcher.Form method="post">
+            <Button 
+              type="primary" danger
+              htmlType="submit"  
+              name="id"
+              value={record.id}>
+                Từ chối
+            </Button>
+            <input type="hidden" name="type" value ="reject" />
+          </fetcher.Form>
         </Space>
       ),
     },
@@ -253,12 +170,12 @@ function PendingPost(props) {
     {
       key: '1',
       label: 'Cho thuê',
-      children:<PostTable columns={columns} data={posts}/>,
+      children:<PostTable columns={columns} data={postLease}/>,
     },
     {
       key: '2',
       label: 'Cần bán',
-      children: <PostTable columns={columns} data={data2}/>,
+      children: <PostTable columns={columns} data={postNoLease}/>,
     },
   ];
   return (

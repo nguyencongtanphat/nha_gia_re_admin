@@ -55,17 +55,7 @@ function PostTable(props) {
     
     return (
       <div>
-        <Flex gap="middle" justify="space-between" align="center">
-          <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
-          <Flex gap = "small">
-            <Button type="primary" size="middle" icon={<CheckOutlined/>} >
-              Duyệt
-            </Button>
-            <Button type="primary" size="middle" danger={true} icon={<CloseOutlined/>} onClick={showModal1}>
-              Từ chối
-            </Button>
-          </Flex>
-        </Flex>
+        <Title level={4}>DS Bài đăng {props.abc} chờ duyệt</Title>
         <Row style={{ display: "flex" }}>
           <Table 
             style={{ width: "100%" }}

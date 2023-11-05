@@ -4,7 +4,6 @@ import Search from 'antd/es/input/Search';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchingClasses from '../../post/components/SearchingClass';
 import PostTable from '../components/Table';
 
 const columns = [
