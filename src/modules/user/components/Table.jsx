@@ -55,15 +55,7 @@ function PostTable(props) {
       <div>
         <Flex gap="middle" justify="space-between" align="center">
           <Title level={4}>{props.abc}</Title>
-          <Flex gap = "small">
-          <Button  style={{background:"#FFCD29"}} type='default' size="middle" icon={<LockOutlined/>} onClick={showDeleteConfirm} >
-              Khóa
-            </Button>
-
-            <Button type="primary" size="middle" danger={true} icon={<DeleteOutlined/>} onClick={showDeleteConfirm} >
-              Xóa
-            </Button>
-          </Flex>
+          
         </Flex>
         <Row style={{ display: "flex" }}>
           <Table rowSelection

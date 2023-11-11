@@ -8,12 +8,14 @@ import PendingPost, { loader as pendingPostLoader} from "./modules/post/screens/
 import ApprovedPost, {loader as approvedPostLoader} from "./modules/post/screens/ApprovedPost";
 import RejectedPost, {loader as rejectedPostLoader} from "./modules/post/screens/RejectedPost";
 import {action as postAction} from "./modules/post/action"
+
+import User, {loader as userLoader} from "./modules/user/screens/User";
+
 import Root from "./Root";
 import Package from "./modules/package/screens/Package"
 import Voucher from "./modules/voucher/screens/Voucher"
 import PendingReporting from "./modules/reporting/screens/PendingReporting"
 import ApprovedReporting from "./modules/reporting/screens/ApprovedReporting"
-import User from "./modules/user/screens/User"
 import PendingUser from "./modules/user/screens/PendingUser"
 import VertificatedUser from "./modules/user/screens/VertificatedUser"
 import Blog from "./modules/blog/screens/Blog"
@@ -64,18 +66,15 @@ const router = createBrowserRouter([
             path: "approved_reporting",
             element: <ApprovedReporting/>,
           },
-          {
-            path: "user",
-            element: <User/>,
-          },
+          
           {
             path: "verificated_user",
             element: <VertificatedUser/>,
           },
-          {
-            path: "pending_user",
-            element: <PendingUser/>,
-          },
+          // {
+          //   path: "pending_user",
+          //   element: <PendingUser/>,
+          // },
           {
             path: "blog",
             element: <Blog/>,
@@ -103,6 +102,7 @@ const router = createBrowserRouter([
           {
             path: "user",
             element: <User/>,
+            loader: userLoader,
           },
           {
             path: "verificated_user",

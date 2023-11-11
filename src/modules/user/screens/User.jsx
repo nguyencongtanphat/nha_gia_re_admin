@@ -1,49 +1,112 @@
 import React from 'react';
-import {Tabs, Card, Row, Col, Typography, Button, Select, Table } from 'antd';
+import {Tabs, Card, Row, Col, Typography, Button, Select, Table, Tag, Space } from 'antd';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import Search from 'antd/es/input/Search';
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLoaderData, useFetcher } from 'react-router-dom';
 import PostTable from '../components/Table';
+import ApiService from '../../../service/ApiService';
+import { CloseOutlined, DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
+
+//function loader to call API
+export async function loader() {
+  
+  const users = await ApiService.get("users");
+  console.log("length",users.length);
+  if (!users) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  //const postLease = posts.filter(post => post.is_lease === true);
+  //const postNoLease = posts.filter(post => post.is_lease === false);
+  // console.log("lease", postLease)
+  // console.log("no lease", postNoLease)
+  console.log("users: ",users)
+  return { users }; 
+}
 
 const columns = [
   {
     title: "Tên",
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "first_name",
+    key: "first_name",
   },
   {
-    title: "Người đăng",
-    dataIndex: "author",
-    key: "author",
+    title: "Họ",
+    dataIndex: "last_name",
+    key: "last_name",
   },
   {
-    title: "Mô tả",
-    dataIndex: "description",
-    key: "description",
+    title: "Ngày sinh",
+    dataIndex: "dob",
+    key: "dob",
   },
   {
-    title: "Giá",
-    dataIndex: "price",
-    sorter: (a, b) => a.price - b.price,
-    key: "price",
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
   },
   {
-    title: "Diện tích",
-    dataIndex: "area",
-    sorter: (a, b) => a.area - b.area,
-    key: "area",
+    title: "Giới tính",
+    dataIndex: "gender",
+    render: (gender) => (
+      <span>
+        {
+             gender ? "Nam" : "Nữ" 
+        }
+      </span>
+    ),
+    key: "gender",
   },
   {
-    title: "Ngày đăng",
-    dataIndex: "uploadDate",
-    key: "uploadDate",
+    title: "Số điện thoại",
+    dataIndex: "phone",
+    key: "phone",
   },
   {
-    title: "Loại bất động sản",
-    dataIndex: "propertyType",
-    key: "propertyType",
+    title: "Trạng thái",
+    dataIndex: "status",
+    render: (status) => (
+      <span>
+        {
+            <Tag color={status=="verified" ? "green" : (status=="not_update" ? "red" : "yellow")} key={status}>
+              {status=="verified" ? "Đã xác minh" : (status=="not_update" ? "Chưa cập nhật" : "Chờ xác minh")}
+            </Tag>
+        }
+      </span>
+    ),
+    key: "status",
   },
+  {
+    title: "Vai trò",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: 'Hành động',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        
+        <Button  style={{background:"#FFCD29"}} type='default' size="middle" >
+              Khóa
+          </Button>
+          
+        
+            <Button 
+              
+              type="primary" danger
+              htmlType="submit"  
+              name="id"
+              value={record.id}>
+                Xóa
+            </Button>
+            <input type="hidden" name="type" value ="delete" />
+          
+      </Space>
+    ),}
 ];
 
 const data1 = [
@@ -326,10 +389,10 @@ const tabs = [
     children: <PostTable columns={columns} data={data2} abc='bình luận'/>,
   },
 ];
-function PendingPost(props) {
+function User(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
-
+  const { users } = useLoaderData()
   return (
     <div>
       <Card>
@@ -354,11 +417,11 @@ function PendingPost(props) {
             </Col>
         </Row>
     
-        <PostTable columns={columns} data={data2} abc='DS Người dùng'/>,
+        <PostTable columns={columns} data={users} abc='DS Người dùng'/>,
       </Card>
       
     </div>
   );
 }
 
-export default PendingPost;
+export default User;
