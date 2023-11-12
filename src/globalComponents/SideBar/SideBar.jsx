@@ -11,11 +11,11 @@ import {
   UserOutlined,
   WarningOutlined,
   GiftOutlined,
-  ReadOutlined
+  ReadOutlined,
 } from '@ant-design/icons';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Menu } from 'antd';
-import style from "./SideBar.module.css";
+import style from './SideBar.module.css';
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -27,14 +27,14 @@ function getItem(label, key, icon, children, type) {
 }
 const items = [
   getItem('Dashboard', '1', <PieChartOutlined />),
-  getItem('Bài đăng', 'post', <FormOutlined/>, [
+  getItem('Bài đăng', 'post', <FormOutlined />, [
     getItem('DS Bài đăng chờ duyệt', 'pending_post'),
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
     getItem('DS Bài đăng đã từ chối', 'rejected_post'),
   ]),
-  getItem('Gói dịch vụ', 'package', <GiftOutlined/>),
+  getItem('Gói dịch vụ', 'package', <GiftOutlined />),
   getItem('Mã giảm giá', 'voucher', <ContainerOutlined />),
-  
+
   getItem('Tố cáo', 'sub2', <WarningOutlined />, [
     getItem('DS Tố cáo chờ duyệt', 'pending_reporting'),
     getItem('DS Tố cáo đã duyệt', 'approved_reporting'),
@@ -49,6 +49,7 @@ const items = [
   ]),
 
   getItem('Blog', 'blog', <ReadOutlined />),
+  getItem('Nhà đầu tư', 'developer', <ReadOutlined />),
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -65,17 +66,11 @@ const SideBar = () => {
     setCollapsed(!collapsed);
   };
   return (
-    <div
-        className={style.SideMenu}
-    >
-      
-
+    <div className={style.SideMenu}>
       <Menu
-       
         defaultOpenKeys={['post']}
         mode="inline"
         theme="light"
-        
         inlineCollapsed={collapsed}
         items={items}
         onClick={(item) => {

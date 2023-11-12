@@ -23,7 +23,9 @@ import User from './modules/user/screens/User';
 import PendingUser from './modules/user/screens/PendingUser';
 import VertificatedUser from './modules/user/screens/VertificatedUser';
 import Blog from './modules/blog/screens/Blog';
-
+import Developer, {
+  loader as developerLoader,
+} from './modules/developer/screens/DeveloperList';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -125,6 +127,11 @@ const router = createBrowserRouter([
           {
             path: 'blog/add',
             element: <h1>ADD PAGE</h1>,
+          },
+          {
+            path: 'developer',
+            element: <Developer />,
+            loader: developerLoader,
           },
         ],
       },
