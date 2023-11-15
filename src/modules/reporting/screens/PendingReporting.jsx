@@ -9,72 +9,71 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const posts = await ApiService.get("posts?&post_is_active[eq]=true&status[eq]='pending'");
-
-  //NHỜ PHÁT CHECK GIÚP TRUNG SAO TRUNG GỌI API VỀ MÀ NÓ CỨ UNDEFINED NHE
   const rpt = await ApiService.get("reports?page=1&type[eq]='post'&status[eq]='pending'");
-  console.log('api report: ',rpt);
-
-
-  console.log("length",posts.length);
-  if (!posts) {
+  if (!rpt) {
     throw new Response("", {
       status: 404,
       statusText: "Not Found",
     });
   }
-  const postLease = posts.filter(post => post.is_lease === true);
-  const postNoLease = posts.filter(post => post.is_lease === false);
-  console.log("lease", postLease)
-  console.log("no lease", postNoLease)
-  return { postLease, postNoLease};
+  const rpt1 = rpt.filter(post => post.type == "post");
+  const rpt2 = rpt.filter(post => post.type == "user");
+  const rpt3 = rpt.filter(post => post.type == "chat");
+  const rpt4 = rpt.filter(post => post.type == "comment");
+  return { rpt1, rpt2, rpt3, rpt4 };
 }
 
 function PendingPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
-  const { postLease, postNoLease} = useLoaderData()
+  const { rpt1, rpt2, rpt3, rpt4 } = useLoaderData()
   const fetcher = useFetcher();
   
   const columns = [
     {
-      title: "Tên",
-      dataIndex: "title",
-      key: "title",
+      title: "Loại",
+      dataIndex: "content_type",
+      key: "content_type",
     },
     {
-      title: "Người đăng",
-      dataIndex: "user",
-      key: "user",
+      title: "Người tố cáo",
+      dataIndex: "reporter",
+      key: "reporter",
       render: user => user.first_name + " "+ user.last_name,
     },
     {
-      title: "Mô tả",
+      title: "Lý do",
       dataIndex: "description",
       key: "description",
     },
     {
-      title: "Giá",
-      dataIndex: "price",
-      sorter: (a, b) => a.price - b.price,
-      key: "price",
+      title: "Tên bài đăng bị tố cáo",
+      dataIndex: "reported",
+      key: "reported",
+      render: user => user.title,
     },
+    // {
+    //   title: "Giá",
+    //   dataIndex: "price",
+    //   sorter: (a, b) => a.price - b.price,
+    //   key: "price",
+    // },
+    // {
+    //   title: "Diện tích",
+    //   dataIndex: "area",
+    //   sorter: (a, b) => a.area - b.area,
+    //   key: "area",
+    // },
     {
-      title: "Diện tích",
-      dataIndex: "area",
-      sorter: (a, b) => a.area - b.area,
-      key: "area",
+      title: "Ngày tạo",
+      dataIndex: "created_date",
+      key: "created_date",
     },
-    {
-      title: "Ngày đăng",
-      dataIndex: "posted_date",
-      key: "posted_date",
-    },
-    {
-      title: "Loại bất động sản",
-      dataIndex: "type_id",
-      key: "type_id",
-    },
+    // {
+    //   title: "Loại bất động sản",
+    //   dataIndex: "type_id",
+    //   key: "type_id",
+    // },
     {
       title: 'Hành động',
       key: 'action',
@@ -116,23 +115,23 @@ function PendingPost(props) {
       label: 'Bài đăng',
       children:<PostTable 
         columns={columns} 
-        data={postLease} 
+        data={rpt1} 
       />,
     },
     {
       key: '2',
       label: 'Người dùng',
-      children: <PostTable columns={columns} data={postNoLease}/>,
+      children: <PostTable columns={columns} data={rpt2}/>,
     },
     {
       key: '3',
       label: 'Cuộc trò chuyện',
-      children: <PostTable columns={columns} data={postNoLease}/>,
+      children: <PostTable columns={columns} data={rpt3}/>,
     },
     {
       key: '4',
       label: 'Bình luận',
-      children: <PostTable columns={columns} data={postNoLease}/>,
+      children: <PostTable columns={columns} data={rpt4}/>,
     },
   ];
   return (
