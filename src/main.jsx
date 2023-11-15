@@ -14,6 +14,7 @@ import RejectedPost, {
   loader as rejectedPostLoader,
 } from './modules/post/screens/RejectedPost';
 import { action as postAction } from './modules/post/action';
+import { action as developerAction } from './modules/developer/action';
 import Root from './Root';
 import Package from './modules/package/screens/Package';
 import Voucher from './modules/voucher/screens/Voucher';
@@ -132,6 +133,7 @@ const router = createBrowserRouter([
             path: 'developer',
             element: <Developer />,
             loader: developerLoader,
+            action: developerAction,
           },
         ],
       },
