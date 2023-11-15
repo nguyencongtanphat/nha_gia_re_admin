@@ -8,14 +8,16 @@ import PendingPost, { loader as pendingPostLoader} from "./modules/post/screens/
 import ApprovedPost, {loader as approvedPostLoader} from "./modules/post/screens/ApprovedPost";
 import RejectedPost, {loader as rejectedPostLoader} from "./modules/post/screens/RejectedPost";
 import {action as postAction} from "./modules/post/action"
+import {action as userAction} from "./modules/user/action"
+
 
 import User, {loader as userLoader} from "./modules/user/screens/User";
 
 import Root from "./Root";
 import Package from "./modules/package/screens/Package"
 import Voucher from "./modules/voucher/screens/Voucher"
-import PendingReporting from "./modules/reporting/screens/PendingReporting"
-import ApprovedReporting from "./modules/reporting/screens/ApprovedReporting"
+import PendingReporting, {loader as pendingReportingLoader} from "./modules/reporting/screens/PendingReporting"
+import ApprovedReporting, {loader as approvedReportingLoader} from "./modules/reporting/screens/ApprovedReporting"
 import PendingUser from "./modules/user/screens/PendingUser"
 import VertificatedUser from "./modules/user/screens/VertificatedUser"
 import Blog from "./modules/blog/screens/Blog"
@@ -61,10 +63,14 @@ const router = createBrowserRouter([
           {
             path: "pending_reporting",
             element: <PendingReporting/>,
+            loader: pendingReportingLoader,
+            action: postAction,
           },
           {
             path: "approved_reporting",
             element: <ApprovedReporting/>,
+            loader: approvedReportingLoader,
+            action: postAction,
           },
           
           {
@@ -103,6 +109,7 @@ const router = createBrowserRouter([
             path: "user",
             element: <User/>,
             loader: userLoader,
+            action: userAction,
           },
           {
             path: "verificated_user",
