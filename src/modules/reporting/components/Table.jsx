@@ -57,7 +57,7 @@ function PostTable(props) {
           />
 
           {
-            Object.keys(item).length !== 0 && <Modal title={item.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+            Object.keys(item).length !== 0 && <Modal title="Tố cáo bài đăng" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
             // footer={(_, { OkBtn, CancelBtn }) => (
             //   <>
             //     <Button icon={<CheckOutlined/>} type="primary">Duyệt</Button>
@@ -75,61 +75,32 @@ function PostTable(props) {
               initialValues={{ remember: true }}
               autoComplete="off"
             >
-              <Form.Item label="Người đăng" >
-                <Input value={`${item.user.first_name} ${item.user.last_name}`} />
+              <Form.Item label="Người tố cáo" >
+                <Input value={`${item.reporter.first_name} ${item.reporter.last_name}`} />
               </Form.Item>
 
-              <Form.Item label="Ngày đăng">
-                <Input value={item.posted_date}/>
+              <Form.Item label="Ngày tố cáo" >
+                <Input value={item.created_date} />
               </Form.Item>
 
-              <Form.Item label="Địa chỉ">
-                <TextArea rows={2} value={item.address_detail}/>
+              <Form.Item label="Loại tố cáo" >
+                <Input value={item.content_type} />
               </Form.Item>
 
-              <Form.Item label="Giá">
-                <Input value={item.price}/>
+              <Form.Item label="Tên bài bị tố cáo" >
+                <Input value={item.reported.title} />
               </Form.Item>
 
-              <Form.Item label="Diện tích">
-                <Input value={item.area}/>
+              <Form.Item label="Trạng thái" >
+                <Input value={item.status} />
               </Form.Item>
 
-              <Form.Item label="Loại BĐS">
-                <Input value={item.type_id}/>
-              </Form.Item>
-              {/* {Object.entries(item.features).map(([key, value]) => {
-                const translatedObj = {
-                  water_price : "Gía nước",
-                  electric_price: "Gía điện",
-                  furniture_status: "Tình trạng nội thất"
-                }
-                return <Form.Item key={key} label={translatedObj.key}>
-                          <Input value={value} />
-                        </Form.Item>
-              })} */}
-              <Form.Item label="Số phòng ngủ">
-                <Input value="3"/>
-              </Form.Item>
-
-              <Form.Item label="Tổng số tầng">
-                <Input value="5"/>
-              </Form.Item>
-
-              <Form.Item label="Giấy tờ pháp lý">
-                <Input value="Đã có sổ hồng"/>
-              </Form.Item>
-
-              <Form.Item label="Loại hình nhà ở">
-                <Input value="Căn hộ/Chung cư"/>
-              </Form.Item>
-
-              <Form.Item label="Mô tả">
+              <Form.Item label="Lý do">
                 <TextArea rows={4} value={item.description}/>
               </Form.Item>
 
               <Flex>
-                {item.images.map(item => <Image height={100} width={200} src={item}/>)}
+                {item.images.map(item => <Image height={100} width={100} src={item}/>)}
               </Flex>
             </Form>
           </Modal>
