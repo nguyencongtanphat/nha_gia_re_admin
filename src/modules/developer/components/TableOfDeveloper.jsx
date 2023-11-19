@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+import ImgCrop from 'antd-img-crop';
 import {
   Row,
   Table,
   Modal,
-  Form,
+  Form as AntForm,
   Input,
   Button,
   Col,
   Flex,
   Typography,
+  Upload,
   Image,
+  Space,
 } from 'antd';
+import axios from 'axios';
 const { Text, Link } = Typography;
 const { TextArea } = Input;
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Form } from 'react-router-dom';
 import { CloseOutlined } from '@ant-design/icons';
 
 function DeveloperTable(props) {
@@ -21,27 +25,23 @@ function DeveloperTable(props) {
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [isModalOpen1, setIsModalOpen1] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
   const [item, setItem] = useState({});
+  const [fileList, setFileList] = useState([]);
 
   const onRowHandler = (record) => {
     setIsModalOpen(true);
     setItem(record);
-  };
-
-  const showModal1 = (props) => {
-    handleCancel();
-    setIsModalOpen1(true);
-  };
-
-  const handleOk1 = () => {
-    setIsModalOpen1(false);
-  };
-
-  const handleCancel1 = () => {
-    setIsModalOpen1(false);
+    console.log('record data: ', record);
+    const images = record.images.map((imageUrl, index) => {
+      return {
+        uid: `${index}`,
+        name: `image ${index}`,
+        status: 'done',
+        url: imageUrl,
+      };
+    });
+    setFileList(images);
   };
 
   const handleOk = () => {
@@ -50,8 +50,48 @@ function DeveloperTable(props) {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsEdit(false);
   };
 
+  const editHandler = () => {
+    setIsEdit((prev) => true);
+  };
+
+  const uploadImage = async (options) => {
+    console.log('uploading image');
+    const { onSuccess, onError, file, onProgress } = options;
+    try {
+      const fmData = new FormData();
+      fmData.append('files', file);
+      const res = await axios.post(
+        'https://nha-gia-re-server.onrender.com/api/v1/media/upload',
+        fmData,
+      );
+
+      onSuccess(res.data.result[0]);
+    } catch (e) {
+      console.log('error', e);
+      const error = new Error('Error occurred while uploading');
+      onError({ event: error });
+    }
+  };
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
   return (
     <div>
       <Row style={{ display: 'flex' }}>
@@ -68,78 +108,72 @@ function DeveloperTable(props) {
         />
 
         {Object.keys(item).length !== 0 && (
-          <Modal
-            title={item.title}
-            open={isModalOpen}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            // footer={(_, { OkBtn, CancelBtn }) => (
-            //   <>
-            //     <Button icon={<CheckOutlined/>} type="primary">Duyệt</Button>
-            //     <Button type="primary" icon={<CloseOutlined/>} danger onClick={showModal1}>Từ chối</Button>
-            //   </>
-            // )}
-          >
-            {/* Form */}
-            <Form
-              style={{ marginTop: '24px' }}
-              name="basic"
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 16 }}
-              initialValues={{ remember: true }}
-              autoComplete="off"
-            >
-              <Form.Item label="Tên nhà đầu tư">
-                <Input value={`${item.name}`} />
-              </Form.Item>
-              <Form.Item label="Mô tả">
-                <TextArea rows={4} value={item.description} />
-              </Form.Item>
-              <Form.Item label="Ngày tạo">
-                <Input rows={4} value={item.created_at} />
-              </Form.Item>
-              <Form.Item label="Trạng thái">
-                {item.is_active == true ? (
-                  <Text type="success">Active</Text>
-                ) : (
-                  <Text type="danger">Inactive</Text>
+          <Modal title="Basic Modal" open={isModalOpen} footer={null}>
+            <Form method="post" id="contact-form">
+              <input type="hidden" name="type" value="edit" />
+              <input type="hidden" name="id" value={item.id} />
+              <p>
+                <span>Tên nhà đầu tư</span>
+                {!isEdit && <Input value={item.name} />}
+                {isEdit && (
+                  <Input name="name" placeholder={`${item.name}`}></Input>
                 )}
-              </Form.Item>
-              <Flex>
-                {item.images.map((item) => (
-                  <Image height={100} width={200} src={item} />
-                ))}
+              </p>
+              <p>
+                <span>Mô tả đầu tư</span>
+
+                {!isEdit && <TextArea rows={4} value={item.description} />}
+                {isEdit && (
+                  <TextArea
+                    name="description"
+                    rows={4}
+                    placeholder={item.description}
+                  />
+                )}
+              </p>
+              <p>
+                <span>Ngày tạo</span>
+                <Input value={item.created_at} />
+              </p>
+              <p>
+                <ImgCrop rotationSlider>
+                  <Upload
+                    customRequest={uploadImage}
+                    listType="picture-card"
+                    fileList={fileList}
+                    disabled={isEdit ? false : true}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                  >
+                    {fileList.length < 5 && '+ Upload'}
+                  </Upload>
+                </ImgCrop>
+                <Input
+                  name="images"
+                  type="hidden"
+                  value={JSON.stringify(fileList)}
+                />
+              </p>
+              <Flex justify="flex-end">
+                <Space>
+                  {isEdit && (
+                    <Button type="primary" htmlType="primary">
+                      Save
+                    </Button>
+                  )}
+
+                  {!isEdit && (
+                    <Button type="primary" onClick={editHandler}>
+                      Edit
+                    </Button>
+                  )}
+
+                  <Button onClick={handleCancel}>Cancel</Button>
+                </Space>
               </Flex>
             </Form>
           </Modal>
         )}
-
-        <Modal
-          title="Vui lòng nhập lý do từ chối bài đăng này"
-          open={isModalOpen1}
-          onOk={handleOk1}
-          onCancel={handleCancel1}
-          footer={(_, { OkBtn1, CancelBtn1 }) => (
-            <>
-              <Button type="primary" icon={<CloseOutlined />} danger>
-                Từ chối
-              </Button>
-            </>
-          )}
-        >
-          <Form
-            style={{ marginTop: '24px' }}
-            name="basic"
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            autoComplete="off"
-          >
-            <Form.Item label="Lý do từ chối">
-              <Input placeholder="Nhập lý do từ chối..." />
-            </Form.Item>
-          </Form>
-        </Modal>
       </Row>
     </div>
   );

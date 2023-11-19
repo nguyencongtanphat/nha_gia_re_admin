@@ -1,5 +1,6 @@
 import React from 'react';
 import ImgCrop from 'antd-img-crop';
+import axios from 'axios';
 import {
   Tabs,
   Card,
@@ -33,17 +34,13 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import TextArea from 'antd/es/input/TextArea';
 //function loader to call API
 export async function loader() {
-  const developers = await ApiService.get('developers');
+  const developers = await ApiService.get('developers?is_active[eq]=true');
   if (!developers) {
     throw new Response('', {
       status: 404,
       statusText: 'Not Found',
     });
   }
-  //   const postLease = posts.filter((post) => post.is_lease === true);
-  //   const postNoLease = posts.filter((post) => post.is_lease === false);
-  //   console.log('lease', postLease);
-  //   console.log('no lease', postNoLease);
   return { developers };
 }
 
@@ -56,15 +53,9 @@ function Developer(props) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [fileList, setFileList] = useState([
-    // {
-    //   uid: '-1',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-  ]);
+  const [fileList, setFileList] = useState([]);
   const onChange = ({ fileList: newFileList }) => {
+    console.log('fileList: ', fileList);
     setFileList(newFileList);
   };
   const onPreview = async (file) => {
@@ -92,13 +83,31 @@ function Developer(props) {
     setIsModalOpen(false);
   };
 
-  const [formDataAddNew] = AntForm.useForm();
-  const onFinish = async (values) => {
-    console.log('Received values:', values);
-    values['images'] = [];
-    const res = await ApiService.post({ url: 'developers', data: values });
-    console.log('response:', res);
+  const uploadImage = async (options) => {
+    try {
+      const { onSuccess, onError, file, onProgress } = options;
+      console.log('file', file);
+      const fmData = new FormData();
+      fmData.append('files', file);
+      const res = await axios.post(
+        'https://nha-gia-re-server.onrender.com/api/v1/media/upload',
+        fmData,
+      );
+
+      console.log('Response', res.data.result[0]);
+      onSuccess(res.data.result[0]);
+    } catch (e) {
+      const error = new Error('Error occurred while uploading');
+      onError({ event: error });
+    }
   };
+
+  // const onFinish = async (values) => {
+  //   console.log('Received values:', values);
+  //   values['images'] = [];
+  //   const res = await ApiService.post({ url: 'developers', data: values });
+  //   console.log('response:', res);
+  // };
 
   const columns = [
     {
@@ -115,17 +124,6 @@ function Developer(props) {
       title: 'Ngày tạo',
       dataIndex: 'created_at',
       key: 'created_at',
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'is_active',
-      key: 'is_active',
-      render: (_, record) =>
-        record.is_active == true ? (
-          <Text type="success">Active</Text>
-        ) : (
-          <Text type="danger">Inactive</Text>
-        ),
     },
     {
       title: 'Hành động',
@@ -179,64 +177,10 @@ function Developer(props) {
 
         <DeveloperTable columns={columns} data={developers} />
       </Card>
-      <Modal
-        title="Basic Modal"
-        open={isModalOpen}
-        footer={null}
-        // onOk={handleOkAddNewModal}
-        // onCancel={handleCancelAddNewModal}
-      >
-        {/* <AntForm
-          form={formDataAddNew}
-          onFinish={onFinish}
-          style={{ marginTop: '24px' }}
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 14 }}
-          initialValues={{ remember: true }}
-          autoComplete="off"
-        >
-          <AntForm.Item
-            name="name"
-            label="Tên nhà đầu tư"
-            rules={[
-              { required: true, message: 'Please input the developer name!' },
-            ]}
-          >
-            <Input />
-          </AntForm.Item>
-          <AntForm.Item
-            name="description"
-            label="Mô tả về nhà đầu từ"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the developer description!',
-              },
-            ]}
-          >
-            <TextArea rows={4} />
-          </AntForm.Item>
-          <AntForm.Item label="Mô tả về nhà đầu từ">
-            <ImgCrop rotationSlider>
-              <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture-card"
-                fileList={fileList}
-                onChange={onChange}
-                onPreview={onPreview}
-              >
-                {fileList.length < 5 && '+ Upload'}
-              </Upload>
-            </ImgCrop>
-          </AntForm.Item>
-          <AntForm.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </AntForm.Item>
-        </AntForm> */}
+      {/* form create */}
+      <Modal title="Basic Modal" open={isModalOpen} footer={null}>
         <Form method="post" id="contact-form">
+          <input type="hidden" name="type" value="create" />
           <p>
             <span>Tên nhà đầu tư</span>
             <Input name="name" />
@@ -248,7 +192,7 @@ function Developer(props) {
           <p>
             <ImgCrop rotationSlider>
               <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                customRequest={uploadImage}
                 listType="picture-card"
                 fileList={fileList}
                 onChange={onChange}
@@ -257,6 +201,11 @@ function Developer(props) {
                 {fileList.length < 5 && '+ Upload'}
               </Upload>
             </ImgCrop>
+            <Input
+              name="images"
+              type="hidden"
+              value={JSON.stringify(fileList)}
+            />
           </p>
           <Flex justify="flex-end">
             <Space>

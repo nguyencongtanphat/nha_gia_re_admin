@@ -17,7 +17,7 @@ const ApiService = {
     try {
       const response = await api.get(`/${url}`);
       const data = response.data.result;
-      console.log("data from API service helper:", data)
+      console.log('data from API service helper:', data);
       return data;
     } catch (error) {
       // Handle error
@@ -27,11 +27,11 @@ const ApiService = {
   },
 
   // Example function to send data to the API
-  post: async ({url, data}) => {
+  post: async ({ url, data }) => {
     try {
       const response = await api.post(`/${url}`, data);
       const result = response.data;
-      console.log("data from API service helper:", response)
+      console.log('data from API service helper:', response);
       return result;
     } catch (error) {
       // Handle error
@@ -39,23 +39,11 @@ const ApiService = {
       throw error;
     }
   },
-  post: async ({url, data}) => {
-    try {
-      const response = await api.post(`/${url}`, data);
-      const result = response.data;
-      console.log("data from API service helper:", response)
-      return result;
-    } catch (error) {
-      // Handle error
-      console.error('Error while sending data:', error);
-      throw error;
-    }
-  },
-  patch: async ({url, data}) => {
+  patch: async ({ url, data }) => {
     try {
       const response = await api.patch(`/${url}`, data);
       const result = response.data;
-      console.log("data from API service helper:", response)
+      console.log('data from API service helper:', response);
       return result;
     } catch (error) {
       // Handle error
@@ -63,7 +51,18 @@ const ApiService = {
       throw error;
     }
   },
-  
+  delete: async ({ url }) => {
+    try {
+      const response = await api.delete(`/${url}`);
+      const result = response.data;
+      console.log('data from API service helper:', response);
+      return result;
+    } catch (error) {
+      // Handle error
+      console.error('Error while sending data:', error);
+      throw error;
+    }
+  },
 };
 
 export default ApiService;
