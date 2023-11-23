@@ -3,6 +3,7 @@ import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Image } 
 const { TextArea } = Input;
 import { useNavigate } from "react-router-dom";
 import { CloseOutlined} from '@ant-design/icons';
+import moment from 'moment';
 
 function PostTable(props) {
     const { Title } = Typography;
@@ -80,7 +81,7 @@ function PostTable(props) {
               </Form.Item>
 
               <Form.Item label="Ngày đăng">
-                <Input value={item.posted_date}/>
+                <Input value={moment(item.posted_date).format('hh:mm DD/MM/YYYY')}/>
               </Form.Item>
 
               <Form.Item label="Địa chỉ">
