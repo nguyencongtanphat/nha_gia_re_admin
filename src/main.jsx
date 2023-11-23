@@ -9,6 +9,7 @@ import ApprovedPost, {loader as approvedPostLoader} from "./modules/post/screens
 import RejectedPost, {loader as rejectedPostLoader} from "./modules/post/screens/RejectedPost";
 import {action as postAction} from "./modules/post/action"
 import {action as userAction} from "./modules/user/action"
+import {action as reportingAction} from "./modules/reporting/action"
 
 
 import User, {loader as userLoader} from "./modules/user/screens/User";
@@ -64,13 +65,13 @@ const router = createBrowserRouter([
             path: "pending_reporting",
             element: <PendingReporting/>,
             loader: pendingReportingLoader,
-            action: postAction,
+            action: reportingAction,
           },
           {
             path: "approved_reporting",
             element: <ApprovedReporting/>,
             loader: approvedReportingLoader,
-            action: postAction,
+            action: reportingAction,
           },
           
           {

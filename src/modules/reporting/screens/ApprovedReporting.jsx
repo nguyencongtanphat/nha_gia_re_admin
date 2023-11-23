@@ -9,7 +9,7 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const rpt = await ApiService.get("reports?page=1&type[eq]='post'&status[eq]='approved'");
+  const rpt = await ApiService.get("reports?page=1&type[eq]='post'&status[eq]='resolved'");
   if (!rpt) {
     throw new Response("", {
       status: 404,
