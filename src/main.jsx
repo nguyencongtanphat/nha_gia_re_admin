@@ -130,7 +130,7 @@ const router = createBrowserRouter([
             element: <h1>ADD PAGE</h1>,
           },
           {
-            path: 'developer',
+            path: 'developer/:page',
             element: <Developer />,
             loader: developerLoader,
             action: developerAction,
