@@ -15,12 +15,14 @@ import RejectedPost, {
 } from './modules/post/screens/RejectedPost';
 import { action as postAction } from './modules/post/action';
 import { action as developerAction } from './modules/developer/action';
+import {action as userAction} from "./modules/user/action"
+import {action as reportingAction} from "./modules/reporting/action"
 import Root from './Root';
 import Package from './modules/package/screens/Package';
 import Voucher from './modules/voucher/screens/Voucher';
-import PendingReporting from './modules/reporting/screens/PendingReporting';
-import ApprovedReporting from './modules/reporting/screens/ApprovedReporting';
-import User from './modules/user/screens/User';
+import PendingReporting, {loader as pendingReportingLoader} from "./modules/reporting/screens/PendingReporting"
+import ApprovedReporting, {loader as approvedReportingLoader} from "./modules/reporting/screens/ApprovedReporting"
+import User, {loader as userLoader} from "./modules/user/screens/User";
 import PendingUser from './modules/user/screens/PendingUser';
 import VertificatedUser from './modules/user/screens/VertificatedUser';
 import Blog from './modules/blog/screens/Blog';
@@ -66,25 +68,26 @@ const router = createBrowserRouter([
             element: <Voucher />,
           },
           {
-            path: 'pending_reporting',
-            element: <PendingReporting />,
+            path: "pending_reporting",
+            element: <PendingReporting/>,
+            loader: pendingReportingLoader,
+            action: reportingAction,
           },
           {
-            path: 'approved_reporting',
-            element: <ApprovedReporting />,
+            path: "approved_reporting",
+            element: <ApprovedReporting/>,
+            loader: approvedReportingLoader,
+            action: reportingAction,
           },
-          {
-            path: 'user',
-            element: <User />,
-          },
+          
           {
             path: 'verificated_user',
             element: <VertificatedUser />,
           },
-          {
-            path: 'pending_user',
-            element: <PendingUser />,
-          },
+          // {
+          //   path: "pending_user",
+          //   element: <PendingUser/>,
+          // },
           {
             path: 'blog',
             element: <Blog />,
@@ -110,8 +113,10 @@ const router = createBrowserRouter([
             element: <ApprovedReporting />,
           },
           {
-            path: 'user',
-            element: <User />,
+            path: "user",
+            element: <User/>,
+            loader: userLoader,
+            action: userAction,
           },
           {
             path: 'verificated_user',
