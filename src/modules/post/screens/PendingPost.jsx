@@ -6,6 +6,7 @@ import { useNavigate,  useLoaderData, useFetcher, Form, redirect } from 'react-r
 import PostTable from '../components/TableOfPost';
 import ApiService from '../../../service/ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
+import moment from 'moment';
 
 //function loader to call API
 export async function loader() {
@@ -63,6 +64,7 @@ function PendingPost(props) {
       title: "Ngày đăng",
       dataIndex: "posted_date",
       key: "posted_date",
+      render: datee => moment(datee).format('hh:mm DD/MM/YYYY')
     },
     {
       title: "Loại bất động sản",

@@ -7,6 +7,7 @@ import { useNavigate, useLoaderData, useFetcher } from 'react-router-dom';
 import PostTable from '../components/Table';
 import ApiService from '../../../service/ApiService';
 import { CloseOutlined, DeleteOutlined, ExclamationCircleFilled, LockOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 //function loader to call API
 export async function loader() {
@@ -49,6 +50,8 @@ function User(props) {
       title: "Ngày sinh",
       dataIndex: "dob",
       key: "dob",
+      render: datee => moment(datee).format('DD/MM/YYYY')
+
     },
     {
       title: "Email",

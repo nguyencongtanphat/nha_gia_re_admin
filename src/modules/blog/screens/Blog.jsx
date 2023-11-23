@@ -105,8 +105,8 @@ export default function Blog() {
           onClick={showModal2}>
               Thêm
             </Button>
-          </Flex>
-          <Flex gap = "small">
+        </Flex>
+        <Flex gap = "small">
             <Button type="primary" size="middle" icon={<EditOutlined/>} >
               Sửa
             </Button>

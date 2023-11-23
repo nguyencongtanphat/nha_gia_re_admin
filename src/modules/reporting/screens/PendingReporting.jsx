@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate,  useLoaderData, useFetcher, Form, redirect } from 'react-router-dom';
 import PostTable from '../components/Table';
 import ApiService from '../../../service/ApiService';
+import moment from 'moment';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
@@ -68,6 +69,7 @@ function PendingPost(props) {
       title: "Ngày tạo",
       dataIndex: "created_date",
       key: "created_date",
+      render: datee => moment(datee).format('hh:mm DD/MM/YYYY')
     },
     // {
     //   title: "Loại bất động sản",

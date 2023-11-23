@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Avatar } from 'antd';
+import moment from 'moment';
 
 import { useNavigate } from "react-router-dom";
 import { CloseOutlined, DeleteOutlined, ExclamationCircleFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -107,7 +108,7 @@ function PostTable(props) {
             </Form.Item>
             
             <Form.Item label="Ngày sinh">
-              <Input value={item.dob}/>
+              <Input value={moment(item.dob).format('DD/MM/YYYY')}/>
             </Form.Item>
 
 
