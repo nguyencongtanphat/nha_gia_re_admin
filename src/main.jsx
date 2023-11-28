@@ -18,8 +18,8 @@ import { action as developerAction } from './modules/developer/action';
 import {action as userAction} from "./modules/user/action"
 import {action as reportingAction} from "./modules/reporting/action"
 import Root from './Root';
-import Package from './modules/package/screens/Package';
-import Voucher from './modules/voucher/screens/Voucher';
+import Package, {loader as packageLoader} from './modules/package/screens/Package';
+import Voucher, {loader as voucherLoader} from './modules/voucher/screens/Voucher';
 import PendingReporting, {loader as pendingReportingLoader} from "./modules/reporting/screens/PendingReporting"
 import ApprovedReporting, {loader as approvedReportingLoader} from "./modules/reporting/screens/ApprovedReporting"
 import User, {loader as userLoader} from "./modules/user/screens/User";
@@ -60,12 +60,9 @@ const router = createBrowserRouter([
             action: postAction,
           },
           {
-            path: 'package',
-            element: <Package />,
-          },
-          {
             path: 'voucher',
             element: <Voucher />,
+            loader: voucherLoader,
           },
           {
             path: "pending_reporting",
@@ -99,10 +96,7 @@ const router = createBrowserRouter([
           {
             path: 'package',
             element: <Package />,
-          },
-          {
-            path: 'voucher',
-            element: <Voucher />,
+            loader: packageLoader,
           },
           {
             path: 'pending_reporting',
