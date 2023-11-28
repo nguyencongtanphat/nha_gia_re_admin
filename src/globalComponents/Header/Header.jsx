@@ -26,7 +26,7 @@ function Header() {
         </Badge>
         <Divider type="vertical" style={{ width: 3, height: 30 }} />
         <Avatar size={36} icon={<UserOutlined />} style={{backgroundColor:"#026D4D"}} />
-         <Row>Harry Nguyễn</Row>
+         <Row>Jun Nguyễn</Row>
         <CaretDownOutlined />
       </Space>
     </div>
