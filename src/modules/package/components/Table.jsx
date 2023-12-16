@@ -67,22 +67,16 @@ function PostTable(props) {
         <Flex gap="middle" justify="space-between" align="center">
         <Flex gap = "small">
           <Title level={4}>DS Gói dịch vụ</Title>
+          </Flex>
+          <Flex gap = "small">
           <Button type="primary" size="middle" icon={<PlusOutlined/>} style={{backgroundColor:"#1890FF", marginLeft:"12px", marginTop:"16px"}}
           onClick={showModal2}>
               Thêm
             </Button>
           </Flex>
-          <Flex gap = "small">
-            <Button type="primary" size="middle" icon={<EditOutlined/>} >
-              Sửa
-            </Button>
-            <Button type="primary" size="middle" danger={true} icon={<DeleteOutlined/>} onClick={showModal1}>
-              Xóa
-            </Button>
-          </Flex>
         </Flex>
         <Row style={{ display: "flex" }}>
-          <Table rowSelection
+          <Table 
             style={{ width: "100%" }}
             rowClassName="custom-row"
             dataSource={props.data}

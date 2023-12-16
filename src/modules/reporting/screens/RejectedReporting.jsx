@@ -10,8 +10,8 @@ import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 
 //function loader to call API
 export async function loader() {
-  const rpt = await ApiService.get("reports?page=1&type[eq]='post'&status[eq]='pending'");
-  console.log('HAAA pending',rpt)
+  const rpt = await ApiService.get("reports?page=1&type[eq]='post'&status[eq]='rejected'");
+  console.log('HAAA reject',rpt)
   if (!rpt) {
     throw new Response("", {
       status: 404,
@@ -25,7 +25,7 @@ export async function loader() {
   return { rpt1, rpt2, rpt3, rpt4 };
 }
 
-function PendingPost(props) {
+function ApprovedPost(props) {
   const navigate = useNavigate()
   const { Title } = Typography;
   const { rpt1, rpt2, rpt3, rpt4 } = useLoaderData()
@@ -82,20 +82,7 @@ function PendingPost(props) {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <fetcher.Form method="post">
-            <Button 
-              onClick={(e)=>{
-                e.stopPropagation()
-              }}
-              type="primary"
-              htmlType="submit"  
-              name="id"
-              value={record.id}>
-                Duyệt
-            </Button>
-            <input type="hidden" name="type" value ="approve" />
-          </fetcher.Form>
-          <fetcher.Form method="post">
+          <fetcher.Form method="patch">
             <Button 
               onClick={(e)=>{
                 e.stopPropagation()
@@ -104,9 +91,9 @@ function PendingPost(props) {
               htmlType="submit"  
               name="id"
               value={record.id}>
-                Từ chối
+                Xóa
             </Button>
-            <input type="hidden" name="type" value ="reject" />
+            <input type="hidden" name="type" value ="delete" />
           </fetcher.Form>
         </Space>
       ),
@@ -144,7 +131,7 @@ function PendingPost(props) {
         <Row style={{marginBottom:"16px"}}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Tố cáo chờ duyệt
+              DS Tố cáo đã duyệt
             </Title>
           </Col>
         </Row>
@@ -168,4 +155,4 @@ function PendingPost(props) {
   );
 }
 
-export default PendingPost;
+export default ApprovedPost;

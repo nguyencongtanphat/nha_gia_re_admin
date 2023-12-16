@@ -59,7 +59,7 @@ function PostTable(props) {
           
         </Flex>
         <Row style={{ display: "flex" }}>
-          <Table rowSelection
+          <Table 
             style={{ width: "100%" }}
             rowClassName="custom-row"
             dataSource={props.data}
