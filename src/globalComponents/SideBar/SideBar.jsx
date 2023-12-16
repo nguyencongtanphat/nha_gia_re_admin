@@ -38,6 +38,7 @@ const items = [
   getItem('Tố cáo', 'sub2', <WarningOutlined />, [
     getItem('DS Tố cáo chờ duyệt', 'pending_reporting'),
     getItem('DS Tố cáo đã duyệt', 'approved_reporting'),
+    getItem('DS Tố cáo đã từ chối', 'rejected_reporting'),
     //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
 

@@ -20,8 +20,11 @@ import {action as reportingAction} from "./modules/reporting/action"
 import Root from './Root';
 import Package, {loader as packageLoader} from './modules/package/screens/Package';
 import Voucher, {loader as voucherLoader} from './modules/voucher/screens/Voucher';
+
 import PendingReporting, {loader as pendingReportingLoader} from "./modules/reporting/screens/PendingReporting"
 import ApprovedReporting, {loader as approvedReportingLoader} from "./modules/reporting/screens/ApprovedReporting"
+import RejectedReporting, {loader as rejectedReportingLoader} from "./modules/reporting/screens/RejectedReporting"
+
 import User, {loader as userLoader} from "./modules/user/screens/User";
 import PendingUser from './modules/user/screens/PendingUser';
 import VertificatedUser from './modules/user/screens/VertificatedUser';
@@ -64,6 +67,13 @@ const router = createBrowserRouter([
             element: <Voucher />,
             loader: voucherLoader,
           },
+
+          {
+            path: "approved_reporting",
+            element: <ApprovedReporting/>,
+            loader: approvedReportingLoader,
+            action: reportingAction,
+          },
           {
             path: "pending_reporting",
             element: <PendingReporting/>,
@@ -71,12 +81,11 @@ const router = createBrowserRouter([
             action: reportingAction,
           },
           {
-            path: "approved_reporting",
-            element: <ApprovedReporting/>,
-            loader: approvedReportingLoader,
+            path: "rejected_reporting",
+            element: <RejectedReporting/>,
+            loader: rejectedReportingLoader,
             action: reportingAction,
           },
-          
           {
             path: 'verificated_user',
             element: <VertificatedUser />,
@@ -97,14 +106,6 @@ const router = createBrowserRouter([
             path: 'package',
             element: <Package />,
             loader: packageLoader,
-          },
-          {
-            path: 'pending_reporting',
-            element: <PendingReporting />,
-          },
-          {
-            path: 'approved_reporting',
-            element: <ApprovedReporting />,
           },
           {
             path: "user",
