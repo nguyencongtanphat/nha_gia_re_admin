@@ -82,12 +82,35 @@ function User(props) {
         <span>
           {
               <Tag color={status=="verified" ? "green" : (status=="not_update" ? "purple" : (status=="banned"?"red":"yellow"))} key={status}>
-                {status=="verified" ? "Đã xác minh" : (status=="not_update" ? "Chưa cập nhật" : (status=="banned"?"Đã khóa":"Chờ xác mịnh"))}
+                {status=="verified" ? "Đã xác minh" : (status=="not_update" ? "Chưa cập nhật" : (status=="banned"?"Đã khóa":"Chờ xác minh"))}
               </Tag>
           }
         </span>
       ),
       key: "status",
+      filters: [
+        {
+          text: 'Đã xác minh',
+          value: 'verified',
+        },
+        {
+          text: 'Chờ xác minh',
+          value: 'unverified',
+        },{
+          text: 'Chưa cập nhật',
+          value: 'not_update',
+        },
+        ,{
+          text: 'Đã khóa',
+          value: 'banned',
+        },
+        {
+          text: 'Chưa cập nhật',
+          value: 'not_update',
+        },
+      ],
+      onFilter: (value, record) => record.status==value,
+      filterSearch: true,
     },
     {
       title: "Vai trò",
@@ -97,10 +120,12 @@ function User(props) {
     {
       title: 'Hành động',
       key: 'action',
-      render: (_, record) => (
+      dataIndex: "status",
+      render: (status, record) => (
         <Space size="middle">
   
-  <fetcher.Form method="patch">
+  {status != "banned" ? <fetcher.Form method="patch" >
+    
             <Button 
               onClick={(e)=>{
                 e.stopPropagation()
@@ -115,7 +140,7 @@ function User(props) {
             <input type="hidden" name="type" value ="ban" />
           </fetcher.Form>
           
-          
+          :
           <fetcher.Form method="patch">
             <Button 
               onClick={(e)=>{
@@ -129,8 +154,8 @@ function User(props) {
                 Mở khóa
             </Button>
             <input type="hidden" name="type" value ="unban" />
-          </fetcher.Form>
-            
+          </fetcher.Form>}
+    
         </Space>
       ),}
   ];
