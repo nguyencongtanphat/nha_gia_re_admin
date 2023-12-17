@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography } from 'antd';
+import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Select } from 'antd';
 
 import { useNavigate } from "react-router-dom";
 import { CloseOutlined, CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import Column from "antd/es/table/Column";
+import { useRef } from "react";
+import ApiService from '../../../service/ApiService';
+
+
 // rowSelection object indicates the need for row selection
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -14,15 +18,18 @@ const rowSelection = {
 function PostTable(props) {
     const { Title } = Typography;
     const navigate = useNavigate();
-
+    const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [isModalOpen1, setIsModalOpen1] = useState(false);
-
     const [isModalOpen2, setIsModalOpen2] = useState(false);
-
-
     const [item, setItem] = useState({});
+
+    const name = useRef("");
+    const discription = useRef("");
+    const price_per_month = useRef(0);
+    const monthly_post_limit = useRef(0);
+    const display_priority_point = useRef(0);
+    const post_approval_priority_point = useRef(0);
 
     const showModal = (props) => {
       setIsModalOpen(true);
@@ -44,6 +51,35 @@ function PostTable(props) {
 
     const handleCancel1 = () => {
       setIsModalOpen1(false);
+    };
+
+    const submitForm = async () => {
+      const newPkg = {
+        name: name.current.input.value,
+        price_per_month: price_per_month.current.input.value,
+        description: discription.current.input.value,
+        monthly_post_limit: monthly_post_limit.current.input.value,
+        display_priority_point: display_priority_point.current.input.value,
+        post_approval_priority_point: post_approval_priority_point.current.input.value,
+      }
+      console.log("newPkg: ", newPkg);
+
+      try{
+        console.log("add new package request")
+        const result =  await ApiService.post({url:`membership-packages`, data: newPkg});
+        console.log("add new package results", result)
+        if(result.status == "success"){
+          alert("add new package success")
+        }else{
+          alert("error")
+        }
+        return null;
+      }catch(e){
+        console.log(e)
+        alert(e)
+        return null;
+      }
+    
     };
 
     const handleOk = () => {
@@ -108,52 +144,33 @@ function PostTable(props) {
           initialValues={{ remember: true }}
           autoComplete="off"
           >
-            <Form.Item label="Người đăng" >
-              <Input value={item.author} />
-            </Form.Item>
-            <Form.Item label="Ngày đăng">
-              <Input value={item.uploadDate}/>
-            </Form.Item>
+            <Form.Item label="Tên">
+                <Input value={item.name}/>
+              </Form.Item>
 
-            <Form.Item label="Địa chỉ">
-              <Input value="213 Lý Thường Kiệt, phường 5, quận 1"/>
-            </Form.Item>
-            
-            <Form.Item label="Giá">
-              <Input value={item.price}/>
-            </Form.Item>
+              <Form.Item label="Mô tả">
+                <Input value={item.description}/>
+              </Form.Item>
 
-            <Form.Item label="Diện tích">
-              <Input value={item.area}/>
-            </Form.Item>
+              <Form.Item label="Giá/tháng">
+                <Input value={item.price_per_month}/>
+              </Form.Item>
+        
+              <Form.Item label="Số lượng bài đăng/tháng">
+                <Input value={item.monthly_post_limit}/>
+              </Form.Item>
 
-            <Form.Item label="Loại BĐS">
-              <Input value={item.propertyType}/>
-            </Form.Item>
+              <Form.Item label="Ưu tiên hiện bài">
+                <Input value={item.display_priority_point}/>
+              </Form.Item>
 
-            <Form.Item label="Số phòng ngủ">
-              <Input value="3"/>
-            </Form.Item>
+              <Form.Item label="Ưu tiên duyệt bài">
+                <Input value={item.post_approval_priority_point}/>
+              </Form.Item>
 
-            <Form.Item label="Tổng số tầng">
-              <Input value="5"/>
-            </Form.Item>
-
-            <Form.Item label="Giấy tờ pháp lý">
-              <Input value="Đã có sổ hồng"/>
-            </Form.Item>
-
-            <Form.Item label="Loại hình nhà ở">
-              <Input value="Căn hộ/Chung cư"/>
-            </Form.Item>
-
-            <Form.Item label="Mô tả">
-              <Input value={item.description}/>
-            </Form.Item>
-
-            <Form.Item label="Hình ảnh">
-              <Input value="hellojun.png"></Input>
-            </Form.Item>
+              <Form.Item label="Trạng thái">
+                <Input value={item.description}/>
+              </Form.Item>
           </Form>
         </Modal>
 
@@ -183,7 +200,7 @@ function PostTable(props) {
             footer={(_, { OkBtn2, CancelBtn2 }) => (
               <>
                 <Button type="primary" icon={<PlusOutlined/>} 
-                style={{backgroundColor:"#1890FF"}}>Thêm</Button>
+                style={{backgroundColor:"#1890FF"}} onClick={submitForm}>Thêm</Button>
               </>
           )}>
           <Form
@@ -193,27 +210,33 @@ function PostTable(props) {
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
           autoComplete="off"
+          form={form}
           >
      
               <Form.Item label="Tên">
-                <Input placeholder="Nhập tên..."/>
+                <Input placeholder="Nhập tên..." ref={name}/>
               </Form.Item>
 
               <Form.Item label="Mô tả">
-                <Input placeholder="Nhập mô tả..."/>
+                <Input placeholder="Nhập mô tả..." ref={discription}/>
               </Form.Item>
 
-              <Form.Item label="Giá/tháng">
-                <Input placeholder="Nhập giá/tháng"/>
+              <Form.Item label="Giá/tháng" >
+                <Input placeholder="Nhập giá/tháng" ref={price_per_month}/>
               </Form.Item>
         
-              <Form.Item label="Số lượng bài đăng/tháng">
-                <Input placeholder="Nhập số lượng bài đăng/tháng"/>
+              <Form.Item label="Số lượng bài đăng/tháng" >
+                <Input placeholder="Nhập số lượng bài đăng/tháng" ref={monthly_post_limit}/>
               </Form.Item>
 
-              <Form.Item label="Điểm ưu tiên">
-                <Input placeholder="Nhập điểm ưu tiên"/>
+              <Form.Item label="Ưu tiên hiện bài" >
+                <Input placeholder="Nhập điểm ưu tiên hiện bài" ref={display_priority_point}/>
               </Form.Item>
+
+              <Form.Item label="Ưu tiên duyệt bài" >
+                <Input placeholder="Nhập điểm ưu tiên duyệt bài" ref={post_approval_priority_point}/>
+              </Form.Item>
+
           </Form>
             </Modal>
         </Row>

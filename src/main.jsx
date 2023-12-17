@@ -17,6 +17,7 @@ import { action as postAction } from './modules/post/action';
 import { action as developerAction } from './modules/developer/action';
 import {action as userAction} from "./modules/user/action"
 import {action as reportingAction} from "./modules/reporting/action"
+import {action as packageAction} from "./modules/package/action"
 import Root from './Root';
 import Package, {loader as packageLoader} from './modules/package/screens/Package';
 import Voucher, {loader as voucherLoader} from './modules/voucher/screens/Voucher';
@@ -106,6 +107,7 @@ const router = createBrowserRouter([
             path: 'package',
             element: <Package />,
             loader: packageLoader,
+            action: packageAction,
           },
           {
             path: "user",
