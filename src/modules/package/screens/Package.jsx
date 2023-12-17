@@ -58,9 +58,14 @@ const columns = [
     key: "created_at",
   },
   {
-    title: "Điểm ưu tiên",
+    title: "Điểm ưu tiên hiện bài",
     dataIndex: "display_priority_point",
     key: "display_priority_point",
+  },
+  {
+    title: "Điểm ưu tiên duyệt bài",
+    dataIndex: "post_approval_priority_point",
+    key: "post_approval_priority_point",
   },
   {
     title: "Trạng thái",
