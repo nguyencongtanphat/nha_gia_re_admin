@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import ErrorPage from './error-page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 //main route here
-import DashBoard from './modules/dashboard/dashboard';
+import DashBoard, {loader as dashboardLoader} from './modules/dashboard/DashBoard';
 import PendingPost, {
   loader as pendingPostLoader,
 } from './modules/post/screens/PendingPost';
@@ -44,6 +44,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <DashBoard />,
+            loader: dashboardLoader,
           },
           {
             path: 'pending_post',

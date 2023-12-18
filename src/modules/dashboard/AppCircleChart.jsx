@@ -8,18 +8,40 @@ import {
   Tooltip,
 } from "recharts";
 
-const data = [
-  { name: "Nhà ở", value: 400 },
-  { name: "Đất", value: 500 },
-  { name: "Chung cư", value: 200 },
-  { name: "Căn hộ", value: 200 },
-  { name: "Khách sạn", value: 200 },
-  { name: "Villa", value: 200 },
-];
-
-const COLORS = ["#264653", "#2a9d8f", "#e9c46a", '#f4a261', '#e76f51', '#ec8c74'];
+const COLORS = ["#264653", "#2a9d8f", "#e9c46a", '#f4a261', '#e76f51'];
 
 const AppCircleChart = ({ pieChartData }) => {
+  let a = 0, b = 0, c = 0, d = 0, e = 0;
+  pieChartData.map((i) =>{
+    switch(i.type_id) {
+      case "apartment":
+        a = a + Number(i.total_posts_by_type);
+        break;
+      case "land":
+        b = b + Number(i.total_posts_by_type);
+        break;
+      case "office":
+        c = c + Number(i.total_posts_by_type);
+        break;
+      case "motel":
+        d = d + Number(i.total_posts_by_type);
+        break;
+      case "house":
+        e = e + Number(i.total_posts_by_type);
+        break;
+      default:
+        break;
+    }
+  })
+
+  const data = [
+    { name: "apartment", value: a },
+    { name: "land", value: b },
+    { name: "office", value: c },
+    { name: "motel", value: d },
+    { name: "house", value: e }
+  ];
+  console.log('aaaa: ',data);
   return (
     <ResponsiveContainer width="100%" height={300}>
       <PieChart>
