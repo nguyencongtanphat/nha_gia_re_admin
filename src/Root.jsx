@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router';
 import Header from './globalComponents/Header/Header';
 import { Flex, Spin } from 'antd';
+import { ToastContainer } from 'react-toastify';
 import {
   // existing code
   useNavigation,
@@ -39,6 +40,7 @@ const Root = () => {
             )}
           </div>
         </div>
+        <ToastContainer />
       </div>
     </ConfigProvider>
   );

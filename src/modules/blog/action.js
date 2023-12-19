@@ -1,5 +1,7 @@
 import { redirect } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
+import { successNoti, errorNoti } from '../../service/AlertService';
+import { Alert } from 'antd';
 
 export async function action({ request, params }) {
   try {
@@ -24,10 +26,10 @@ export async function action({ request, params }) {
       const result = await ApiService.delete({ url: `blogs/${id}` });
       console.log('delete results', result);
       if (result.status == 'success') {
-        alert('delete success');
+        alert('Xóa bài blog thành công');
         return redirect('/blogs');
       } else {
-        alert('error');
+        alert('Đã có lỗi xảy ra xin thử lại');
       }
       return null;
     } else if (type === 'edit') {
@@ -46,10 +48,10 @@ export async function action({ request, params }) {
         data: data,
       });
       if (result.status == 'success') {
-        alert('update success');
+        alert('Chỉnh sữa bài blog thành công');
         return redirect(`/blogs/${id}`);
       } else {
-        alert('error');
+        alert('Đã có lỗi trong quá trình chỉnh sữa bài blog, xin thử lại');
       }
       return null;
     }
