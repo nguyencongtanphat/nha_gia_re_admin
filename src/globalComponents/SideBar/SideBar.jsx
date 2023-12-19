@@ -49,7 +49,7 @@ const items = [
     //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
 
-  getItem('Blog', 'blog', <ReadOutlined />),
+  getItem('Blogs', 'blogs', <ReadOutlined />),
   getItem('Nhà đầu tư', 'developer', <ReadOutlined />),
 ];
 const SideBar = () => {
