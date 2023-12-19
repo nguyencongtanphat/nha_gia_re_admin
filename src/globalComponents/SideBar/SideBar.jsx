@@ -26,7 +26,7 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem('Dashboard', '1', <PieChartOutlined />),
+  getItem('Dashboard', '', <PieChartOutlined />),
   getItem('Bài đăng', 'post', <FormOutlined />, [
     getItem('DS Bài đăng chờ duyệt', 'pending_post'),
     getItem('DS Bài đăng đã duyệt', 'approved_post'),
