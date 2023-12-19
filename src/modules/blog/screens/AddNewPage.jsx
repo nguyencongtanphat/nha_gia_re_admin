@@ -18,56 +18,27 @@ const { TextArea } = Input;
 const { Title } = Typography;
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import HtmlContent from '../components/HtmlContent';
+import Preview from '../components/Preview';
 function AddNewPage() {
   const [html, setHtml] = useState('');
-  const containerStyle = {
-    height: '450px',
-    overflow: 'auto',
-    backgroundColor: '#ffffff',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    boxSizing: 'border-box',
+  const [title, setTitle] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalStyle = {
+    width: '800px',
   };
+
+  const handleOpenDialog = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseDialog = () => {
+    setIsModalOpen(false);
+  };
+
   const titleStyle = {
     textAlign: 'center',
   };
   return (
     <div>
-      {/* <Card>
-        <Breadcrumbs />
-        <Flex justify="flex-end">
-          <Form method="post" id="create-form">
-            <input type="hidden" name="type" value="create" />
-            <input type="hidden" name="content" value={html} />
-            <Button type="primary" htmlType="submit">
-              Save
-            </Button>
-          </Form>
-        </Flex>
-
-        <Row gutter={[16, 16]}>
-          <Col span={8}>
-            <Title level={5}>Thêm nội dung bài đăng</Title>
-            <TextArea
-              rows={10}
-              onChange={(e) => {
-                setHtml(e.target.value);
-              }}
-              placeholder="Thêm nội dung bài đăng ở đây"
-            />
-          </Col>
-          <Col span={16}>
-            <Flex vertical justify="center">
-              <Title level={4} style={titleStyle}>
-                Xem trước nội dung bài đăng
-              </Title>
-              <div style={containerStyle}>
-                <HtmlContent html={html} />
-              </div>
-            </Flex>
-          </Col>
-        </Row>
-      </Card> */}
       <Card>
         <Title level={3} style={titleStyle}>
           Tạo bài Blog
@@ -76,7 +47,13 @@ function AddNewPage() {
           <input type="hidden" name="type" value="create" />
           <p>
             <span>Tiêu đề</span>
-            <Input name="title" placeholder="Nhập tiêu đề" />
+            <Input
+              name="title"
+              placeholder="Nhập tiêu đề"
+              onBlur={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
           </p>
           <p>
             <span>Mô tả ngắn</span>
@@ -92,14 +69,23 @@ function AddNewPage() {
           </p>
           <p>
             <span>Nội dung</span>
-            <TextArea name="content" rows={4} placeholder="Nhập nội dung" />
+            <TextArea
+              rows={10}
+              name="content"
+              onBlur={(e) => {
+                setHtml(e.target.value);
+              }}
+              placeholder="Thêm nội dung bài đăng ở đây"
+            />
           </p>
           <Flex justify="flex-end">
             <Space>
               <Button type="primary" danger>
                 Hủy
               </Button>
-              <Button type="primary">Xem trước</Button>
+              <Button type="primary" onClick={handleOpenDialog}>
+                Xem trước
+              </Button>
               <Button type="primary" htmlType="submit">
                 Lưu
               </Button>
@@ -107,6 +93,20 @@ function AddNewPage() {
           </Flex>
         </Form>
       </Card>
+
+      <Modal
+        title=""
+        closeIcon={null}
+        open={isModalOpen}
+        width={1000}
+        footer={[
+          <Button type="primary" onClick={handleCloseDialog}>
+            OK
+          </Button>,
+        ]}
+      >
+        <Preview html={html} title={title} />
+      </Modal>
     </div>
   );
 }

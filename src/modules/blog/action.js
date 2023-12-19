@@ -2,21 +2,27 @@ import { redirect } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 
 export async function action({ request, params }) {
-  const formData = await request.formData();
-  const type = formData.get('type');
-  console.log('type: ', type);
-  if (type === 'create') {
-    console.log('Data', formData.get('content'));
-    // const images = JSON.parse(formData.get('images'));
-    // const imagePaths = images.map((image) => image.response);
-    // const body = {
-    //   name: formData.get('name'),
-    //   description: formData.get('description'),
-    //   images: imagePaths,
-    // };
-    // const res = await ApiService.post({ url: 'developers', data: body });
-    return null;
+  try {
+    const formData = await request.formData();
+    const type = formData.get('type');
+    console.log('type: ', type);
+    if (type === 'create') {
+      const body = {
+        title: formData.get('title'),
+        short_description: formData.get('description'),
+        author: formData.get('author'),
+        thumbnail: formData.get('thumbnail'),
+        content: formData.get('content'),
+      };
+      console.log('body: ', body);
+      const res = await ApiService.post({ url: 'blogs', data: body });
+      console.log('res: ', res);
+      return redirect('/blogs');
+    }
+  } catch (err) {
+    alert(err.message);
   }
+
   //   } else if (type === 'delete') {
   //     try {
   //       const id = data.get('id');
