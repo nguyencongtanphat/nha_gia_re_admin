@@ -150,10 +150,9 @@ export default function Blog() {
                 extra={<img width={272} alt="logo" src={item.thumbnail} />}
               >
                 <List.Item.Meta
-                  //avatar={<Avatar src={item.avatar} />}
-
                   title={<a href={item.href}>{item.title}</a>}
-                  description={item.short_description}
+                  description={`${item.short_description}
+                  `}
                 />
                 {/* {item.content} */}
               </List.Item>

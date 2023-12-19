@@ -62,7 +62,7 @@ function EditBlog() {
             <span>Tiêu đề</span>
             <Input
               name="title"
-              placeholder={blog[0].title}
+              defaultValue={blog[0].title}
               onBlur={(e) => {
                 setTitle(e.target.value);
               }}
@@ -72,17 +72,17 @@ function EditBlog() {
             <span>Mô tả ngắn</span>
             <TextArea
               name="description"
-              placeholder={blog[0].short_description}
+              defaultValue={blog[0].short_description}
               rows={4}
             />
           </p>
           <p>
             <span>Tác giả</span>
-            <Input name="author" placeholder={blog[0].author} />
+            <Input name="author" defaultValue={blog[0].author} />
           </p>
           <p>
             <span>Thumbnail</span>
-            <Input name="thumbnail" placeholder={blog[0].thumbnail} />
+            <Input name="thumbnail" defaultValue={blog[0].thumbnail} />
           </p>
           <p>
             <span>Nội dung</span>
@@ -92,7 +92,7 @@ function EditBlog() {
               onBlur={(e) => {
                 setHtml(e.target.value);
               }}
-              placeholder={blog[0].content}
+              defaultValue={blog[0].content}
             />
           </p>
           <Flex justify="flex-end">
