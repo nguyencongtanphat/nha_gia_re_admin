@@ -20,9 +20,9 @@ const Breadcrumbs = () => {
   });
 
   const breadcrumbItems = [
-    <Breadcrumb.Item key="Trang chủ">
+    <Breadcrumb.Item key="home">
       <Link to="/" style={{ fontSize: '16px' }}>
-        Trang Chủ
+        Home
       </Link>
     </Breadcrumb.Item>,
     ...extraBreadcrumbItems,
