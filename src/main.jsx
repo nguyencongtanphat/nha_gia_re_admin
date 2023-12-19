@@ -45,8 +45,13 @@ import Developer, {
   loader as developerLoader,
 } from './modules/developer/screens/DeveloperList';
 
-import BlogDetail from './modules/blog/screens/BlogDetail';
+import BlogDetail, {
+  loader as blogDetailLoader,
+} from './modules/blog/screens/BlogDetail';
 import AddNewPage from './modules/blog/screens/AddNewPage';
+import EditBlog, {
+  loader as EditBlogLoader,
+} from './modules/blog/screens/BlogEdit';
 
 const router = createBrowserRouter([
   {
@@ -114,15 +119,23 @@ const router = createBrowserRouter([
             path: 'blogs',
             element: <Blog />,
             loader: blogLoader,
+            action: blogAction,
           },
           {
             path: 'blogs/:id',
             element: <BlogDetail />,
-            loader: blogLoader,
+            loader: blogDetailLoader,
+            action: blogAction,
           },
           {
             path: 'blogs/add',
             element: <AddNewPage />,
+            action: blogAction,
+          },
+          {
+            path: 'blogs/edit/:id',
+            element: <EditBlog />,
+            loader: EditBlogLoader,
             action: blogAction,
           },
           {

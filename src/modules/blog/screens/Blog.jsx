@@ -27,14 +27,14 @@ import {
 import Search from 'antd/es/input/Search';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate, useLoaderData } from 'react-router-dom';
+import { useNavigate, useLoaderData, useFetcher } from 'react-router-dom';
 import { Tag } from 'antd';
 import Title from 'antd/es/typography/Title';
 import ApiService from '../../../service/ApiService';
 
 //function loader to call API
 export async function loader() {
-  const blogs = await ApiService.get('blogs?page=1');
+  const blogs = await ApiService.get('blogs?page=all&is_active[eq]=true');
   console.log('blogs', blogs);
   if (!blogs) {
     throw new Response('', {
@@ -47,6 +47,7 @@ export async function loader() {
 
 export default function Blog() {
   const { blogs } = useLoaderData();
+  const fetcher = useFetcher();
   const data = Array.from({ length: 23 }).map((_, i) => ({
     href: 'https://ant.design',
     title: `ant design part ${i}`,
@@ -118,36 +119,46 @@ export default function Blog() {
           }}
           dataSource={blogs}
           // khi onclick co the navigate sang trang khac
-          renderItem={(item) => (
-            <List.Item
-              onClick={() => {
-                navigate(`/blogs/1`);
-              }}
-              key={item.id}
-              actions={[
-                <Button type="primary" size="middle" icon={<EditOutlined />}>
-                  Sửa
-                </Button>,
-                <Button
-                  type="primary"
-                  size="middle"
-                  danger={true}
-                  icon={<DeleteOutlined />}
-                >
-                  Xóa
-                </Button>,
-              ]}
-              extra={<img width={272} alt="logo" src={item.thumbnail} />}
-            >
-              <List.Item.Meta
-                //avatar={<Avatar src={item.avatar} />}
+          renderItem={(item) => {
+            return (
+              <List.Item
+                onClick={() => {
+                  console.log('item:', item);
+                  navigate(`/blogs/${item.id}`);
+                }}
+                key={item.id}
+                actions={[
+                  <Button type="primary" size="middle" icon={<EditOutlined />}>
+                    Sửa
+                  </Button>,
+                  <fetcher.Form method="patch">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      type="primary"
+                      danger
+                      htmlType="submit"
+                      name="id"
+                      value={item.id}
+                    >
+                      Xóa
+                    </Button>
+                    <input type="hidden" name="type" value="delete" />
+                  </fetcher.Form>,
+                ]}
+                extra={<img width={272} alt="logo" src={item.thumbnail} />}
+              >
+                <List.Item.Meta
+                  //avatar={<Avatar src={item.avatar} />}
 
-                title={<a href={item.href}>{item.title}</a>}
-                description={item.short_description}
-              />
-              {/* {item.content} */}
-            </List.Item>
-          )}
+                  title={<a href={item.href}>{item.title}</a>}
+                  description={item.short_description}
+                />
+                {/* {item.content} */}
+              </List.Item>
+            );
+          }}
         />
       </Card>
     </div>

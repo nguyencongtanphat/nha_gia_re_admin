@@ -18,9 +18,44 @@ export async function action({ request, params }) {
       const res = await ApiService.post({ url: 'blogs', data: body });
       console.log('res: ', res);
       return redirect('/blogs');
+    } else if (type === 'delete') {
+      const id = formData.get('id');
+      console.log('delete request', id);
+      const result = await ApiService.delete({ url: `blogs/${id}` });
+      console.log('delete results', result);
+      if (result.status == 'success') {
+        alert('delete success');
+        return redirect('/blogs');
+      } else {
+        alert('error');
+      }
+      return null;
+    } else if (type === 'edit') {
+      const data = {
+        title: formData.get('title'),
+        short_description: formData.get('description'),
+        author: formData.get('author'),
+        thumbnail: formData.get('thumbnail'),
+        content: formData.get('content'),
+      };
+
+      console.log('edit request', data);
+      const id = formData.get('id');
+      const result = await ApiService.patch({
+        url: `blogs/${id}`,
+        data: data,
+      });
+      if (result.status == 'success') {
+        alert('update success');
+        return redirect(`/blogs/${id}`);
+      } else {
+        alert('error');
+      }
+      return null;
     }
   } catch (err) {
     alert(err.message);
+    return null;
   }
 
   //   } else if (type === 'delete') {
