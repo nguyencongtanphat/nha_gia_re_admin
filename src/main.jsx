@@ -15,24 +15,44 @@ import RejectedPost, {
 } from './modules/post/screens/RejectedPost';
 import { action as postAction } from './modules/post/action';
 import { action as developerAction } from './modules/developer/action';
-import {action as userAction} from "./modules/user/action"
-import {action as reportingAction} from "./modules/reporting/action"
-import {action as packageAction} from "./modules/package/action"
+import { action as userAction } from './modules/user/action';
+import { action as reportingAction } from './modules/reporting/action';
+import { action as packageAction } from './modules/package/action';
+import { action as blogAction } from './modules/blog/action';
 import Root from './Root';
-import Package, {loader as packageLoader} from './modules/package/screens/Package';
-import Voucher, {loader as voucherLoader} from './modules/voucher/screens/Voucher';
+import Package, {
+  loader as packageLoader,
+} from './modules/package/screens/Package';
+import Voucher, {
+  loader as voucherLoader,
+} from './modules/voucher/screens/Voucher';
 
-import PendingReporting, {loader as pendingReportingLoader} from "./modules/reporting/screens/PendingReporting"
-import ApprovedReporting, {loader as approvedReportingLoader} from "./modules/reporting/screens/ApprovedReporting"
-import RejectedReporting, {loader as rejectedReportingLoader} from "./modules/reporting/screens/RejectedReporting"
+import PendingReporting, {
+  loader as pendingReportingLoader,
+} from './modules/reporting/screens/PendingReporting';
+import ApprovedReporting, {
+  loader as approvedReportingLoader,
+} from './modules/reporting/screens/ApprovedReporting';
+import RejectedReporting, {
+  loader as rejectedReportingLoader,
+} from './modules/reporting/screens/RejectedReporting';
 
-import User, {loader as userLoader} from "./modules/user/screens/User";
+import User, { loader as userLoader } from './modules/user/screens/User';
 import PendingUser from './modules/user/screens/PendingUser';
 import VertificatedUser from './modules/user/screens/VertificatedUser';
-import Blog from './modules/blog/screens/Blog';
+import Blog, { loader as blogLoader } from './modules/blog/screens/Blog';
 import Developer, {
   loader as developerLoader,
 } from './modules/developer/screens/DeveloperList';
+
+import BlogDetail, {
+  loader as blogDetailLoader,
+} from './modules/blog/screens/BlogDetail';
+import AddNewPage from './modules/blog/screens/AddNewPage';
+import EditBlog, {
+  loader as EditBlogLoader,
+} from './modules/blog/screens/BlogEdit';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -71,20 +91,20 @@ const router = createBrowserRouter([
           },
 
           {
-            path: "approved_reporting",
-            element: <ApprovedReporting/>,
+            path: 'approved_reporting',
+            element: <ApprovedReporting />,
             loader: approvedReportingLoader,
             action: reportingAction,
           },
           {
-            path: "pending_reporting",
-            element: <PendingReporting/>,
+            path: 'pending_reporting',
+            element: <PendingReporting />,
             loader: pendingReportingLoader,
             action: reportingAction,
           },
           {
-            path: "rejected_reporting",
-            element: <RejectedReporting/>,
+            path: 'rejected_reporting',
+            element: <RejectedReporting />,
             loader: rejectedReportingLoader,
             action: reportingAction,
           },
@@ -97,13 +117,28 @@ const router = createBrowserRouter([
           //   element: <PendingUser/>,
           // },
           {
-            path: 'blog',
+            path: 'blogs',
             element: <Blog />,
+            loader: blogLoader,
+            action: blogAction,
           },
-          // {
-          //   path: "approved_post",
-          //   element: <ApprovedPost />,
-          // },
+          {
+            path: 'blogs/:id',
+            element: <BlogDetail />,
+            loader: blogDetailLoader,
+            action: blogAction,
+          },
+          {
+            path: 'blogs/add',
+            element: <AddNewPage />,
+            action: blogAction,
+          },
+          {
+            path: 'blogs/edit/:id',
+            element: <EditBlog />,
+            loader: EditBlogLoader,
+            action: blogAction,
+          },
           {
             path: 'package',
             element: <Package />,
@@ -111,8 +146,8 @@ const router = createBrowserRouter([
             action: packageAction,
           },
           {
-            path: "user",
-            element: <User/>,
+            path: 'user',
+            element: <User />,
             loader: userLoader,
             action: userAction,
           },
@@ -123,14 +158,6 @@ const router = createBrowserRouter([
           {
             path: 'pending_user',
             element: <PendingUser />,
-          },
-          {
-            path: 'blog',
-            element: <Blog />,
-          },
-          {
-            path: 'blog/add',
-            element: <h1>ADD PAGE</h1>,
           },
           {
             path: 'developer/:page',
