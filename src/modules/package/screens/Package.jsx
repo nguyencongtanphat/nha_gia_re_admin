@@ -20,7 +20,7 @@ import ApiService from '../../../service/ApiService';
 import moment from 'moment';
 
 export async function loader() {
-  const voucher = await ApiService.get('membership-packages');
+  const voucher = await ApiService.get('membership-packages?page=all');
   console.log('length', voucher.length);
   if (!voucher) {
     throw new Response('', {
@@ -36,7 +36,7 @@ export async function loader() {
   return { voucher };
 }
 
-function PendingPost(props) {
+function Package(props) {
   const columns = [
     {
       title: 'Tên',
@@ -126,4 +126,4 @@ function PendingPost(props) {
   );
 }
 
-export default PendingPost;
+export default Package;

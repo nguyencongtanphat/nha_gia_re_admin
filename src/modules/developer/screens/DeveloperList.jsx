@@ -36,7 +36,9 @@ import TextArea from 'antd/es/input/TextArea';
 //function loader to call API
 export async function loader({ request, params }) {
   console.log('request:', request);
-  const developers = await ApiService.get('developers?is_active[eq]=true');
+  const developers = await ApiService.get(
+    'developers?is_active[eq]=true&page=all',
+  );
   if (!developers) {
     throw new Response('', {
       status: 404,

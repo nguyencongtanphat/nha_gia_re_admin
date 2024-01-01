@@ -54,6 +54,7 @@ import AddNewPage from './modules/blog/screens/AddNewPage';
 import EditBlog, {
   loader as EditBlogLoader,
 } from './modules/blog/screens/BlogEdit';
+import Login from './modules/login/Login';
 
 const router = createBrowserRouter([
   {
@@ -114,10 +115,6 @@ const router = createBrowserRouter([
             path: 'verificated_user',
             element: <VertificatedUser />,
           },
-          // {
-          //   path: "pending_user",
-          //   element: <PendingUser/>,
-          // },
           {
             path: 'blogs',
             element: <Blog />,
@@ -153,10 +150,7 @@ const router = createBrowserRouter([
             loader: userLoader,
             action: userAction,
           },
-          {
-            path: 'verificated_user',
-            element: <VertificatedUser />,
-          },
+
           {
             path: 'pending_user',
             element: <PendingUser />,
@@ -170,6 +164,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: 'login',
+    element: <Login />,
   },
 ]);
 
