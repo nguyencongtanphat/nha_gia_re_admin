@@ -156,7 +156,7 @@ const router = createBrowserRouter([
             element: <PendingUser />,
           },
           {
-            path: 'developer/:page',
+            path: 'developer',
             element: <Developer />,
             loader: developerLoader,
             action: developerAction,

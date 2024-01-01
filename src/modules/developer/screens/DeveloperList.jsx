@@ -33,6 +33,7 @@ import DeveloperTable from '../components/TableOfDeveloper';
 import ApiService from '../../../service/ApiService';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import TextArea from 'antd/es/input/TextArea';
+import moment from 'moment';
 //function loader to call API
 export async function loader({ request, params }) {
   console.log('request:', request);
@@ -106,13 +107,6 @@ function Developer(props) {
     }
   };
 
-  // const onFinish = async (values) => {
-  //   console.log('Received values:', values);
-  //   values['images'] = [];
-  //   const res = await ApiService.post({ url: 'developers', data: values });
-  //   console.log('response:', res);
-  // };
-
   const columns = [
     {
       title: 'Tên',
@@ -128,6 +122,7 @@ function Developer(props) {
       title: 'Ngày tạo',
       dataIndex: 'created_at',
       key: 'created_at',
+      render: (_, record) => moment(record).format('DD/MM/YYYY'),
     },
     {
       title: 'Hành động',
@@ -156,13 +151,6 @@ function Developer(props) {
   return (
     <div>
       <Card>
-        <Button
-          onClick={() => {
-            navigate('/developer/2');
-          }}
-        >
-          test
-        </Button>
         <Breadcrumbs></Breadcrumbs>
         <Row style={{ marginBottom: '16px' }}>
           <Col>
@@ -187,7 +175,6 @@ function Developer(props) {
         </Flex>
 
         <DeveloperTable columns={columns} data={developers} />
-        <Pagination defaultCurrent={49} total={50} />
       </Card>
       {/* form create */}
       <Modal title="Basic Modal" open={isModalOpen} footer={null}>
