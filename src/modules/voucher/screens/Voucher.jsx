@@ -7,6 +7,7 @@ import { useNavigate, useFetcher, useLoaderData } from 'react-router-dom';
 import PostTable from '../components/Table';
 import { Tag } from 'antd';
 import ApiService from '../../../service/ApiService';
+import moment from 'moment';
 
 export async function loader() {
   const voucher = await ApiService.get('discount-codes');
@@ -53,16 +54,19 @@ const columns = [
     title: 'Ngày tạo',
     dataIndex: 'created_at',
     key: 'created_at',
+    render: (_, record) => moment(record.created_at).format('DD/MM/YYYY'),
   },
   {
     title: 'Ngày bắt đầu',
     dataIndex: 'starting_date',
     key: 'starting_date',
+    render: (_, record) => moment(record.starting_date).format('DD/MM/YYYY'),
   },
   {
     title: 'Ngày hết hạn',
     dataIndex: 'expiration_date',
     key: 'expiration_date',
+    render: (_, record) => moment(record.expiration_date).format('DD/MM/YYYY'),
   },
   {
     title: 'Trạng thái',
@@ -80,7 +84,7 @@ const columns = [
   },
 ];
 
-function PendingPost(props) {
+function Voucher(props) {
   const navigate = useNavigate();
   const { Title } = Typography;
   const { voucher } = useLoaderData();
@@ -116,4 +120,4 @@ function PendingPost(props) {
   );
 }
 
-export default PendingPost;
+export default Voucher;

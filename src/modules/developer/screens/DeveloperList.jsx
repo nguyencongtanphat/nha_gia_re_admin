@@ -177,7 +177,7 @@ function Developer(props) {
         <DeveloperTable columns={columns} data={developers} />
       </Card>
       {/* form create */}
-      <Modal title="Basic Modal" open={isModalOpen} footer={null}>
+      <Modal title="Tạo nhà đầu tư mới" open={isModalOpen} footer={null}>
         <Form method="post" id="contact-form">
           <input type="hidden" name="type" value="create" />
           <p>
@@ -209,10 +209,10 @@ function Developer(props) {
           <Flex justify="flex-end">
             <Space>
               <Button danger type="primary" onClick={handleCancelAddNewModal}>
-                Cancel
+                Đóng
               </Button>
               <Button type="primary" htmlType="submit">
-                Submit
+                Lưu
               </Button>
               {/* <button type="submit">submit</button> */}
             </Space>

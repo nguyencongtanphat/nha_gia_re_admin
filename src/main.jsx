@@ -21,6 +21,7 @@ import { action as userAction } from './modules/user/action';
 import { action as reportingAction } from './modules/reporting/action';
 import { action as packageAction } from './modules/package/action';
 import { action as blogAction } from './modules/blog/action';
+import { action as voucherAction } from './modules/voucher/action';
 import Root from './Root';
 import Package, {
   loader as packageLoader,
@@ -28,7 +29,6 @@ import Package, {
 import Voucher, {
   loader as voucherLoader,
 } from './modules/voucher/screens/Voucher';
-
 import PendingReporting, {
   loader as pendingReportingLoader,
 } from './modules/reporting/screens/PendingReporting';
@@ -91,6 +91,7 @@ const router = createBrowserRouter([
             path: 'voucher',
             element: <Voucher />,
             loader: voucherLoader,
+            action: voucherAction,
           },
 
           {

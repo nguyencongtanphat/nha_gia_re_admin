@@ -164,17 +164,17 @@ function DeveloperTable(props) {
                 <Space>
                   {isEdit && (
                     <Button type="primary" htmlType="primary">
-                      Save
+                      Lưu
                     </Button>
                   )}
 
                   {!isEdit && (
                     <Button type="primary" onClick={editHandler}>
-                      Edit
+                      Chỉnh sửa
                     </Button>
                   )}
 
-                  <Button onClick={handleCancel}>Cancel</Button>
+                  <Button onClick={handleCancel}>Đóng</Button>
                 </Space>
               </Flex>
             </Form>

@@ -28,10 +28,6 @@ export async function loader() {
       statusText: 'Not Found',
     });
   }
-  //const postLease = posts.filter(post => post.is_lease === true);
-  //const postNoLease = posts.filter(post => post.is_lease === false);
-  // console.log("lease", postLease)
-  // console.log("no lease", postNoLease)
   console.log('voucher: ', voucher);
   return { voucher };
 }
@@ -91,8 +87,8 @@ function Package(props) {
       ),
     },
   ];
-  const fetcher = useFetcher();
-  const navigate = useNavigate();
+  // const fetcher = useFetcher();
+  // const navigate = useNavigate();
   const { Title } = Typography;
   const { voucher } = useLoaderData();
 
