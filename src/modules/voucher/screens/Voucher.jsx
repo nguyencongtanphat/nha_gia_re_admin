@@ -1,5 +1,15 @@
 import React from 'react';
-import { Tabs, Card, Row, Col, Typography, Button, Select, Table } from 'antd';
+import {
+  Space,
+  Tabs,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Button,
+  Select,
+  Table,
+} from 'antd';
 import Search from 'antd/es/input/Search';
 import Breadcrumbs from '../../../globalComponents/BreadCrumb/BreadCrumb';
 import { useState, useRef, useEffect } from 'react';
@@ -11,6 +21,10 @@ import moment from 'moment';
 
 export async function loader() {
   const voucher = await ApiService.get('discount-codes');
+  const packageList = await ApiService.get(
+    'membership-packages?is_active[eq]=true&page=all',
+  );
+  console.log('packageList,', packageList);
   console.log('length', voucher.length);
   if (!voucher) {
     throw new Response('', {
@@ -19,7 +33,7 @@ export async function loader() {
     });
   }
   console.log('voucher: ', voucher);
-  return { voucher };
+  return { voucher, packageList };
 }
 
 const columns = [
@@ -87,7 +101,7 @@ const columns = [
 function Voucher(props) {
   const navigate = useNavigate();
   const { Title } = Typography;
-  const { voucher } = useLoaderData();
+  const { voucher, packageList } = useLoaderData();
   const fetcher = useFetcher();
 
   return (
@@ -114,7 +128,7 @@ function Voucher(props) {
           </Col>
         </Row>
 
-        <PostTable columns={columns} data={voucher} />
+        <PostTable columns={columns} data={voucher} packageList={packageList} />
       </Card>
     </div>
   );
