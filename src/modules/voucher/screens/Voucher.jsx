@@ -41,8 +41,20 @@ export async function loader() {
 function Voucher(props) {
   const navigate = useNavigate();
   const { Title } = Typography;
-  const { voucher, packageList } = useLoaderData();
+  let { voucher, packageList } = useLoaderData();
   const fetcher = useFetcher();
+  const [query, setQuery] = useState('');
+  //filter search
+  voucher = voucher.filter((item) =>
+    item.code.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  const handleSearch = (value) => {
+    // Handle the search logic here
+    console.log('Search value:', value);
+    setQuery(value);
+  };
+
   const columns = [
     {
       title: 'Mã CODE',
@@ -142,11 +154,11 @@ function Voucher(props) {
         <Row style={{ marginBottom: '12px' }}>
           <Col>
             <Search
-              placeholder="Nhập thông tin cần tìm..."
+              placeholder="Nhập mã giảm giá cần tìm..."
               style={{
                 width: 500,
               }}
-              onSearch={() => {}}
+              onSearch={handleSearch}
               enterButton
             />
           </Col>

@@ -115,7 +115,16 @@ function Package(props) {
   const fetcher = useFetcher();
   // const navigate = useNavigate();
   const { Title } = Typography;
-  const { voucher } = useLoaderData();
+  let { voucher } = useLoaderData();
+  const [query, setQuery] = useState('');
+  voucher = voucher.filter((item) =>
+    item.name.toLowerCase().includes(query.toLowerCase()),
+  );
+  const handleSearch = (value) => {
+    // Handle the search logic here
+    console.log('Search value:', value);
+    setQuery(value);
+  };
 
   return (
     <div>
@@ -135,7 +144,7 @@ function Package(props) {
               style={{
                 width: 500,
               }}
-              onSearch={() => {}}
+              onSearch={handleSearch}
               enterButton
             />
           </Col>
