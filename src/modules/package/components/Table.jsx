@@ -202,19 +202,19 @@ function PostTable(props) {
             </p>
             <p>
               <span>Giá/tháng</span>
-              <Input name="pricePerMonth" />
+              <Input type="number" name="pricePerMonth" />
             </p>
             <p>
               <span>Số lượng bài đăng/tháng</span>
-              <Input name="postPerMonth" />
+              <Input type="number" name="postPerMonth" />
             </p>
             <p>
               <span>Điểm ưu tiên hiện bài</span>
-              <Input name="displayPriorityPoint" />
+              <Input type="number" name="displayPriorityPoint" />
             </p>
             <p>
               <span>Điểm ưu tiên duyệt bài</span>
-              <Input name="postApprovalPriorityPoint" />
+              <Input type="number" name="postApprovalPriorityPoint" />
             </p>
             <Flex justify="flex-end">
               <Space>

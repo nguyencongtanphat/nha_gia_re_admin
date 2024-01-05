@@ -20,7 +20,21 @@ export async function action({ request, params }) {
         data: body,
       });
       return null;
+    } else if (type === 'delete') {
+      const id = data.get('id');
+      console.log('delete request');
+      const result = await ApiService.delete({
+        url: `membership-packages/${id}`,
+      });
+      console.log('delete results', result);
+      if (result.status == 'success') {
+        alert('delete success');
+      } else {
+        alert('error');
+      }
+      return null;
     }
+
     return null;
   } catch (e) {
     console.log(e);

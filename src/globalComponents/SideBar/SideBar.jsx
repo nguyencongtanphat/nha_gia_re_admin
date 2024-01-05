@@ -67,7 +67,7 @@ const SideBar = () => {
   return (
     <div className={style.SideMenu}>
       <Menu
-        defaultOpenKeys={['post']}
+        defaultOpenKeys={['']}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}

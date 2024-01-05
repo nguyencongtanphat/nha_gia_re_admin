@@ -20,7 +20,9 @@ import ApiService from '../../../service/ApiService';
 import moment from 'moment';
 
 export async function loader() {
-  const voucher = await ApiService.get('membership-packages?page=all');
+  const voucher = await ApiService.get(
+    'membership-packages?is_active[eq]=true&page=all',
+  );
   console.log('length', voucher.length);
   if (!voucher) {
     throw new Response('', {
@@ -72,22 +74,45 @@ function Package(props) {
       dataIndex: 'post_approval_priority_point',
       key: 'post_approval_priority_point',
     },
+    // {
+    //   title: 'Trạng thái',
+    //   dataIndex: 'is_active',
+    //   key: 'is_active',
+    //   render: (is_active) => (
+    //     <span>
+    //       {
+    //         <Tag color={is_active ? 'green' : 'red'} key={is_active}>
+    //           {is_active ? 'Đang kích hoạt' : 'Vô hiệu'}
+    //         </Tag>
+    //       }
+    //     </span>
+    //   ),
+    // },
     {
-      title: 'Trạng thái',
-      dataIndex: 'is_active',
-      key: 'is_active',
-      render: (is_active) => (
-        <span>
-          {
-            <Tag color={is_active ? 'green' : 'red'} key={is_active}>
-              {is_active ? 'Đang kích hoạt' : 'Vô hiệu'}
-            </Tag>
-          }
-        </span>
+      title: 'Hành động',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <fetcher.Form method="patch">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              type="primary"
+              danger
+              htmlType="submit"
+              name="id"
+              value={record.id}
+            >
+              Xóa
+            </Button>
+            <input type="hidden" name="type" value="delete" />
+          </fetcher.Form>
+        </Space>
       ),
     },
   ];
-  // const fetcher = useFetcher();
+  const fetcher = useFetcher();
   // const navigate = useNavigate();
   const { Title } = Typography;
   const { voucher } = useLoaderData();

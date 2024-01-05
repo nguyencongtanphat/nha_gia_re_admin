@@ -21,11 +21,28 @@ export async function action({ request, params }) {
         ),
       };
       console.log('create data', body);
-
       const res = await ApiService.post({
         url: 'discount-codes',
         data: body,
       });
+      if (result.status == 'success') {
+        alert('create success');
+      } else {
+        alert('error');
+      }
+      return null;
+    } else {
+      const id = data.get('id');
+      console.log('delete request');
+      const result = await ApiService.delete({
+        url: `discount-codes/${id}`,
+      });
+      console.log('delete results', result);
+      if (result.status == 'success') {
+        alert('delete success');
+      } else {
+        alert('error');
+      }
       return null;
     }
     return null;
