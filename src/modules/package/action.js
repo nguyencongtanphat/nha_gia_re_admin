@@ -19,6 +19,11 @@ export async function action({ request, params }) {
         url: 'membership-packages',
         data: body,
       });
+      if (res.status == 'success') {
+        alert('create success');
+      } else {
+        alert('error');
+      }
       return null;
     } else if (type === 'delete') {
       const id = data.get('id');

@@ -25,7 +25,7 @@ export async function action({ request, params }) {
         url: 'discount-codes',
         data: body,
       });
-      if (result.status == 'success') {
+      if (res.status == 'success') {
         alert('create success');
       } else {
         alert('error');
