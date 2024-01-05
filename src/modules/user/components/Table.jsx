@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Avatar } from 'antd';
+import { Row, Table, Modal, Form, Input, Button, Col, Flex, Typography, Avatar, Image } from 'antd';
 import moment from 'moment';
 
 import { useNavigate } from "react-router-dom";
@@ -77,12 +77,12 @@ function PostTable(props) {
           <Modal title={item.first_name + " "+ item.last_name} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
             footer={(_, { OkBtn, CancelBtn }) => (
               <>
-                <Button type="primary" icon={<DeleteOutlined/>} danger onClick={showDeleteConfirm}>Xóa</Button>
+                <Button type="primary" onClick={showDeleteConfirm}>OK</Button>
               </>
           )}>
 
             {/* Form */}
-          <Form
+            {props.abc == "DS Người dùng" ? <Form
           style={{marginTop:"24px"}}
           name="basic"
           labelCol={{ span: 6 }}
@@ -128,7 +128,64 @@ function PostTable(props) {
               <Input value={item.status}/>
             </Form.Item>
 
-          </Form>
+          </Form>: <Form
+          style={{marginTop:"24px"}}
+          name="basic"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          autoComplete="off"
+          >
+            <Form.Item label="Họ tên" >
+              <Input value={item.full_name} />
+            </Form.Item>
+
+            <Form.Item label="Ngày sinh">
+              <Input value={moment(item.dob).format('DD/MM/YYYY')}/>
+            </Form.Item>
+
+            <Form.Item label="Số CCCD/CMND">
+              <Input value={item.identity_card_no}/>
+            </Form.Item>
+
+            <Form.Item label="Ngày cấp">
+              <Input value={moment(item.identity_card_issued_date).format('DD/MM/YYYY')}/>
+            </Form.Item>
+
+            <Form.Item label="Nơi cấp">
+              <Input value={item.issued_by}/>
+            </Form.Item>
+
+            <Form.Item label="Địa chỉ">
+              <Input value="213 Lý Thường Kiệt, phường 5, quận 1"/>
+            </Form.Item>
+
+            <Form.Item label="Giới tính">
+              <Input value={item.gender ? "Nam" : "Nữ"}/>
+            </Form.Item>
+
+            <Form.Item label="Ảnh CCCD/CMND">
+            <Flex>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+                  <div>Mặt trước</div>
+                  <Image height={50} width={100} src={item.front_identity_card_image_link}/>
+                </div>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+                  <div>Mặt sau</div>
+                  <Image height={50} width={100} src={item.fback_identity_card_image_link}/>
+                </div>
+              </Flex>
+            </Form.Item>
+            
+            <Form.Item label="Ảnh chân dung">
+            <Flex>
+                
+                  <Image height={100} width={75} src={item.portrait_image_link}/>
+                
+              </Flex>
+            </Form.Item>
+          </Form>}
+
         </Modal>
 
         </Row>
