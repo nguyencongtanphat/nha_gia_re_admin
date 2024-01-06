@@ -29,7 +29,7 @@ import moment from 'moment';
 
 //function loader to call API
 export async function loader() {
-  const users = await ApiService.get('account-verification-requests?is_verified[eq]=true&page=all');
+  const users = await ApiService.get('account-verification-requests?is_verified[eq]=false&page=all&reviewed_at[not]=null');
   console.log('length', users.length);
   if (!users) {
     throw new Response('', {
@@ -41,7 +41,7 @@ export async function loader() {
   return { users };
 }
 
-function VerticatedUser(props) {
+function RejectedUser(props) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const { Title } = Typography;
@@ -408,7 +408,7 @@ function VerticatedUser(props) {
         <Row style={{ marginBottom: '16px' }}>
           <Col>
             <Title level={3} style={{ margin: 0, padding: 0 }}>
-              DS Người dùng đã xác minh
+              DS Người dùng đã từ chối
             </Title>
           </Col>
         </Row>
@@ -424,10 +424,10 @@ function VerticatedUser(props) {
             />
           </Col>
         </Row>
-        <PostTable columns={columns} data={users} abc="DS Người dùng đã xác minh" />,
+        <PostTable columns={columns} data={users} abc="DS Người dùng đã từ chối" />,
       </Card>
     </div>
   );
 }
 
-export default VerticatedUser;
+export default RejectedUser;
