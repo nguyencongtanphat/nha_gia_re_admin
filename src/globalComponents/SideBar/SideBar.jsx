@@ -12,6 +12,7 @@ import {
   WarningOutlined,
   GiftOutlined,
   ReadOutlined,
+  DollarOutlined,
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Menu } from 'antd';
@@ -40,15 +41,16 @@ const items = [
     getItem('DS Tố cáo đã duyệt', 'approved_reporting'),
     getItem('DS Tố cáo đã từ chối', 'rejected_reporting'),
   ]),
-  getItem('DS người dùng', 'user', <ReadOutlined />),
-  // getItem('DS người dùng', 'user', <UserOutlined />, [
-  //   getItem('DS Người dùng', 'user'),
-  //   getItem('DS ND chờ xác minh', 'pending_user'),
-  //   getItem('DS ND đã xác minh', 'verificated_user'),
-  // ]),
+
+  getItem('Người dùng', 'sub3', <UserOutlined />, [
+    getItem('DS Người dùng', 'user'),
+    getItem('DS ND chờ xác minh', 'pending_user'),
+    getItem('DS ND đã xác minh', 'verificated_user'),
+    getItem('DS ND đã từ chối', 'rejected_user'),
+  ]),
 
   getItem('Blogs', 'blogs', <ReadOutlined />),
-  getItem('Nhà đầu tư', 'developer', <ReadOutlined />),
+  getItem('Nhà đầu tư', 'developer', <DollarOutlined />),
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
